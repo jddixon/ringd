@@ -1,2 +1,17 @@
-py/ringd/CHANGES
+~/dev/py/ringd/CHANGES
+
+v0.2.0
+    2016-02-19
+        * convert to Python3                                        SLOC  829
+
+2012-12-27
+    * added skeletal ringDaemon                                     SLOC  488
+    * pulled in chanIO.py and daemon.py from alertz                 SLOC  661
+    * testLogEntrySerialization now testRingProtoSerialization 
+        - added testAckWithAndWithoutText(), works                  SLOC  708
+    * adding rough ringClient, probably to be used only for testing SLOC  771
+2012-12-26
+    * original, mostly code from ../fieldz
+    * testLogEntrySerialization.py succeeds                         SLOC  354
+    * testRingHostInfoProto succeeds                                SLOC  359
 
