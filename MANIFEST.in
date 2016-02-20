@@ -1,0 +1,15 @@
+# see http://docs.python.org/distutils/sourcedist.html
+
+include netDistrib.conf
+include CHANGES README* TODO MANIFEST.in
+include ringDaemon
+include test*.py 
+include *.xlgo
+exclude unittest*
+
+recursive-include ringd  *.py
+
+global-exclude junk* .*swp 
+prune   .svn
+
+

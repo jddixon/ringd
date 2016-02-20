@@ -1,2 +1,9 @@
-py/ringd/TODO
+~/dev/py/ringd/TODO
 
+2012-12-27
+    * need to clearly determine who can use the logs
+        - currently set up for U server only
+    * ringDaemon and ringClient are froprovisionally nt ends to the same 
+        ringd.ringd.daemon.  When used as a client, it should forward
+        any log entries to the appropriate port on both ring host 0
+        (presumably LA) and ring host 1 (presumably T)

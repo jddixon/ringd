@@ -1,0 +1,106 @@
+#!/usr/bin/python
+
+# ~/dev/py/ringd/ringClient
+
+import os, re, sys, time
+from argparse   import ArgumentParser
+
+import u, upax
+from ringd          import *
+from ringd.daemon   import *
+
+def main():
+
+    timestamp           = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
+
+    # -- program defaults -------------------------------------------
+
+    # -- check for config file --------------------------------------
+
+    # -- parse the command line -------------------------------------
+    # see docs.python.org/library/argparse.html 
+    parser = ArgumentParser('client inserting CLJ postings into the house ring')
+   
+    parser.add_argument('-3', '--usingSHA3',    action='store_true', 
+            help='use SHA3, and so 256-bit keys')
+
+    parser.add_argument('-a', '--appDir',       default = RINGD_APP_DIR,
+            help='where we keep client data')
+
+    parser.add_argument('-H', '--hostInfoFile', default = RING_HOST_INFO_FILE, 
+            help='base name of the file')
+
+    parser.add_argument('-j', '--justShow', action='store_true',
+            help='show args and exit')
+
+    parser.add_argument('-L', '--logDir',       default='logs', 
+            help='name of log directory')
+
+    parser.add_argument('-n', '--appName',      default = RINGD_APP_NAME, 
+            help="name of the ring client's configuration subdirectory")
+
+    parser.add_argument('-p', '--port',      default = RINGD_PORT, 
+            help='port the daemon listens on')
+
+    parser.add_argument('-T', '--testing', action='store_true',
+            help='test run - write to ./testU')
+
+    parser.add_argument('-t', '--showTimestamp', action='store_true',
+            help='show run timestamp')
+
+    parser.add_argument('-u', '--uDir',       default='U', 
+            help='base name of  U/ directory, defaults to U')
+
+    parser.add_argument('-V', '--showVersion', action='store_true',
+            help='show version number and date')
+
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='talk a lot')
+
+    parser.add_argument('-z', '--noChanges', action='store_true',
+            help="don't actually write anything to disk")
+
+    args = parser.parse_args()      # a Namespace object
+
+    # -- fixups -----------------------------------------------------
+    args.pgmNameAndVersion = "%s client v%s %s" % (args.appName,
+                                            __version__, __version_date__)
+
+    # the order of these statements is significant --------
+    if args.testing:    
+        args.appDir     = 'myApps'
+    args.configDir      = os.path.join(args.appDir,    args.appName)
+    args.pathToHostInfo = os.path.join(args.configDir, args.hostInfoFile)
+    args.logDir         = os.path.join(args.configDir, args.logDir)
+    # end ordered statements ------------------------------
+
+    args.timestamp      = timestamp
+
+    # -- sanity checks ----------------------------------------------
+    if not os.path.exists(args.appDir):
+        print("app directory '%s' does not exist" % args.appDir)
+        sys.exit(1)
+
+    if not os.path.exists(args.configDir):
+        print("config directory '%s' does not exist" % args.configDir)
+        sys.exit(1)
+
+    if not os.path.exists(args.logDir):
+        os.mkdir(args.logDir) 
+
+    uDirParts = args.uDir.split('/')
+    if len(uDirParts) > 1:
+        print("uDir may not contain any slashes: aborting") 
+        sys.exit(1)
+    
+    # fixups --------------------------------------------------------
+    if args.uDir and args.uDir[-1] == '/':
+        args.uDir = args.uDir[:-1]          # drop any trailing slash
+    args.uDir = os.path.join(args.configDir, args.uDir)
+
+    # -- do it ------------------------------------------------------
+    args.isClient = True
+    invokeTheDaemon(args)
+
+if __name__ == '__main__':
+    main()
