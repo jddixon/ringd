@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.2.1
+    2016-02-25
+        * update LICENSE                                            SLOC  829
 v0.2.0
     2016-02-19
         * convert to Python3                                        SLOC  829
@@ -14,4 +17,5 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
