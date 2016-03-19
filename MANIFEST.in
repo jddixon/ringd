@@ -2,7 +2,7 @@
 
 include netDistrib.conf
 include CHANGES README* TODO MANIFEST.in
-include ringDaemon
+include ringClient ringDaemon
 include test*.py 
 include *.xlgo
 exclude unittest*

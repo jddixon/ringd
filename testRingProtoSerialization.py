@@ -1,27 +1,30 @@
 #!/usr/bin/python3
 
 # testRingProtoSerialization.py
-import time, unittest
-from io     import StringIO
+import time
+import unittest
+from io import StringIO
 
 from rnglib import SimpleRNG
 
 from fieldz.parser import StringProtoSpecParser
-import fieldz.fieldTypes    as F
-import fieldz.msgSpec       as M
-import fieldz.typed         as T
-from fieldz.chan    import Channel
+import fieldz.fieldTypes as F
+import fieldz.msgSpec as M
+import fieldz.typed as T
+from fieldz.chan import Channel
 from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
-from ringd          import *
+from ringd import *
 
-BUFSIZE = 16*1024
-rng     = SimpleRNG( time.time() )
+BUFSIZE = 16 * 1024
+rng = SimpleRNG(time.time())
 
 # TESTS -------------------------------------------------------------
+
+
 class TestRingProtoSerialization (unittest.TestCase):
 
     def setUp(self):
-        self.sOM        = RINGD_PROTO
+        self.sOM = RINGD_PROTO
 
     def tearDown(self):
         pass
@@ -29,12 +32,12 @@ class TestRingProtoSerialization (unittest.TestCase):
     # utility functions #############################################
     def leMsgValues(self):
         """ returns a list """
-        timestamp   = int(time.time())
-        key         = [0]*20
-        length      = rng.nextInt32()
-        nodeID      = [0]*20
-        src         = 'who is responsible'
-        path        = '/home/jdd/tarballs/something.tar.gz'
+        timestamp = int(time.time())
+        key = [0] * 20
+        length = rng.nextInt32()
+        nodeID = [0] * 20
+        src = 'who is responsible'
+        path = '/home/jdd/tarballs/something.tar.gz'
         # let's have some random bytes
         rng.nextBytes(nodeID)
         rng.nextBytes(key)
@@ -52,20 +55,20 @@ class TestRingProtoSerialization (unittest.TestCase):
         # Create a channel ------------------------------------------
         # its buffer will be used for both serializing # the instance
         # data and, by deserializing it, for creating a second instance.
-        chan    = Channel(BUFSIZE)
-        buf     = chan.buffer
-        self.assertEquals( BUFSIZE, len(buf) )
+        chan = Channel(BUFSIZE)
+        buf = chan.buffer
+        self.assertEquals(BUFSIZE, len(buf))
 
         # create the AckMsg class ------------------------------
         ackSpec = self.sOM.msgs[0]
         msgName = ackSpec.name
         self.assertEquals('ack', msgName)
 
-        AckMsg  = makeMsgClass(self.sOM, 'ack')
+        AckMsg = makeMsgClass(self.sOM, 'ack')
 
         # create a message instance ---------------------------------
-        values  = [ text ]
-        ack     = AckMsg( values )
+        values = [text]
+        ack = AckMsg(values)
         (text1) = tuple(values)
 
         self.assertEquals(ackSpec.name, ack.name)
@@ -79,10 +82,10 @@ class TestRingProtoSerialization (unittest.TestCase):
             self.assertEquals(values[i], ack[i].value)
 
         # verify fields are accessible in the object ----------------
-        self.assertEquals(text,      ack.text)
+        self.assertEquals(text, ack.text)
 
         # serialize the object to the channel -----------------------
-        buf             = chan.buffer
+        buf = chan.buffer
         chan.clear()
         n = ack.writeStandAlone(chan)
         self.assertEquals(0, n)                         # returns msg index
@@ -96,11 +99,11 @@ class TestRingProtoSerialization (unittest.TestCase):
         self.assertTrue(ack.__eq__(readBack))
 
         # produce another message from the same values --------------
-        ack2        = AckMsg( values )
-        chan2       = Channel(BUFSIZE)
+        ack2 = AckMsg(values)
+        chan2 = Channel(BUFSIZE)
         n = ack2.writeStandAlone(chan2)
         chan2.flip()
-        (copy2,n3)  = AckMsg.read(chan2, self.sOM)
+        (copy2, n3) = AckMsg.read(chan2, self.sOM)
         self.assertTrue(ack.__eq__(readBack))
         self.assertTrue(ack2.__eq__(copy2))
         self.assertEquals(n, n3)                # GEEP
@@ -110,17 +113,17 @@ class TestRingProtoSerialization (unittest.TestCase):
     def testAckWithAndWithoutText(self):
         self.assertIsNotNone(self.sOM)
         self.assertTrue(isinstance(self.sOM, M.ProtoSpec))
-        self.assertEquals( 'org.xlattice.ringd', self.sOM.name )
+        self.assertEquals('org.xlattice.ringd', self.sOM.name)
 
-        self.assertEquals(0,  len(self.sOM.enums) )
-        self.assertEquals(11, len(self.sOM.msgs ) )
-        self.assertEquals(0,  len(self.sOM.seqs ) )
+        self.assertEquals(0, len(self.sOM.enums))
+        self.assertEquals(11, len(self.sOM.msgs))
+        self.assertEquals(0, len(self.sOM.seqs))
 
         text = 'nothing much'
         self.doTestAck(text)                    # msg is 16 bytes long
         text = ''
         self.doTestAck(text)                    # msg is 4 bytes
-    
+
     def testLEMsgSerialization(self):
 
         # parse the protoSpec
@@ -131,11 +134,11 @@ class TestRingProtoSerialization (unittest.TestCase):
 
         self.assertIsNotNone(self.sOM)
         self.assertTrue(isinstance(self.sOM, M.ProtoSpec))
-        self.assertEquals( 'org.xlattice.ringd', self.sOM.name )
+        self.assertEquals('org.xlattice.ringd', self.sOM.name)
 
-        self.assertEquals(0,  len(self.sOM.enums) )
-        self.assertEquals(11, len(self.sOM.msgs ) )
-        self.assertEquals(0,  len(self.sOM.seqs ) )
+        self.assertEquals(0, len(self.sOM.enums))
+        self.assertEquals(11, len(self.sOM.msgs))
+        self.assertEquals(0, len(self.sOM.seqs))
 
         # XXX a foolish test, but we use the variable 'leMsgSpec' below
         leMsgSpec = self.sOM.msgs[5]
@@ -146,15 +149,15 @@ class TestRingProtoSerialization (unittest.TestCase):
         # its buffer will be used for both serializing # the instance
         # data and, by deserializing it, for creating a second instance.
         chan = Channel(BUFSIZE)
-        buf  = chan.buffer
-        self.assertEquals( BUFSIZE, len(buf) )
+        buf = chan.buffer
+        self.assertEquals(BUFSIZE, len(buf))
 
         # create the LogEntryMsg class ------------------------------
-        LogEntryMsg     = makeMsgClass(self.sOM, 'logEntry')
+        LogEntryMsg = makeMsgClass(self.sOM, 'logEntry')
 
         # create a message instance ---------------------------------
-        values  = self.leMsgValues()        # a list of quasi-random values
-        leMsg   = LogEntryMsg( values )
+        values = self.leMsgValues()        # a list of quasi-random values
+        leMsg = LogEntryMsg(values)
         (timestamp, key, length, nodeID, src, path) = tuple(values)
 
         # DEBUG
@@ -175,22 +178,22 @@ class TestRingProtoSerialization (unittest.TestCase):
 
         # verify fields are accessible in the object ----------------
         #(timestamp, key, length, nodeID, src, path) = tuple(values)
-        self.assertEquals(timestamp,leMsg.timestamp)
-        self.assertEquals(key,      leMsg.key)
-        self.assertEquals(length,   leMsg.length)
-        self.assertEquals(nodeID,   leMsg.nodeID)
-        self.assertEquals(src,      leMsg.src)
-        self.assertEquals(path,     leMsg.path)
+        self.assertEquals(timestamp, leMsg.timestamp)
+        self.assertEquals(key, leMsg.key)
+        self.assertEquals(length, leMsg.length)
+        self.assertEquals(nodeID, leMsg.nodeID)
+        self.assertEquals(src, leMsg.src)
+        self.assertEquals(path, leMsg.path)
 
         # serialize the object to the channel -----------------------
-        buf             = chan.buffer
+        buf = chan.buffer
         chan.clear()
         n = leMsg.writeStandAlone(chan)
         self.assertEquals(5, n)                         # returns msg index
         oldPosition = chan.position                     # TESTING flip()
         chan.flip()
         self.assertEquals(oldPosition, chan.limit)      # TESTING flip()
-        self.assertEquals(0,           chan.position)   # TESTING flip()
+        self.assertEquals(0, chan.position)   # TESTING flip()
         actual = chan.limit
 
         print("ACTUAL LENGTH OF SERIALIZED OBJECT: %u" % actual)
@@ -201,11 +204,11 @@ class TestRingProtoSerialization (unittest.TestCase):
         self.assertTrue(leMsg.__eq__(readBack))
 
         # produce another message from the same values --------------
-        leMsg2      = LogEntryMsg( values )
-        chan2       = Channel(BUFSIZE)
+        leMsg2 = LogEntryMsg(values)
+        chan2 = Channel(BUFSIZE)
         n = leMsg2.writeStandAlone(chan2)
         chan2.flip()
-        (copy2,n3)  = LogEntryMsg.read(chan2, self.sOM)
+        (copy2, n3) = LogEntryMsg.read(chan2, self.sOM)
         self.assertTrue(leMsg.__eq__(readBack))
         self.assertTrue(leMsg2.__eq__(copy2))
         self.assertEquals(n, n3)                # GEEP

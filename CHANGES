@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.2.2
+    2016-03-18
+        * add and execute auto8it                                   SLOC  852
 v0.2.1
     2016-02-25
         * update LICENSE                                            SLOC  829
@@ -17,5 +20,6 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
