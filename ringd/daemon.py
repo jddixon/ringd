@@ -1,46 +1,53 @@
 # ~/dev/py/ringd/ringd/daemon.py
 
-__all__ = [ 'clearLogs', 'invokeTheDaemon',
-          ]
+__all__ = ['clearLogs', 'invokeTheDaemon',
+           ]
 
-import os, socket, sys, time
+import os
+import socket
+import sys
+import time
 import serverutil
-from io                 import StringIO
+from io import StringIO
 
-import u, upax
+import u
+import upax
 
-import fieldz.fieldTypes    as F
-import fieldz.msgSpec       as M
-import fieldz.typed         as T
+import fieldz.fieldTypes as F
+import fieldz.msgSpec as M
+import fieldz.typed as T
 
-from ringd              import *
-from ringd.chanIO       import *
+from ringd import *
+from ringd.chanIO import *
 
-from fieldz.chan        import Channel
-from fieldz.msgImpl     import makeMsgClass, makeFieldClass, MsgImpl
+from fieldz.chan import Channel
+from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
 
 # DAEMON ------------------------------------------------------------
+
+
 def clearLogs(options):
     logDir = options.logDir
     print("DEBUG: clearLogs, logDir = '%s'" % logDir)
     if os.path.exists(logDir):
         if logDir.startswith('/') or logDir.startswith('..'):
-            raise RuntimeError ( "cannot delete %s/*" % logDir )
+            raise RuntimeError("cannot delete %s/*" % logDir)
         files = os.listdir(logDir)
         if files:
             if options.verbose:
                 print("found %u files" % len(files))
             for file in files:
-                os.unlink( os.path.join(logDir, file) )
+                os.unlink(os.path.join(logDir, file))
+
 
 def actuallyRunTheDaemon(options):
     """
-    All necessary resources having been obtained, actually runs the 
+    All necessary resources having been obtained, actually runs the
     daemon.
     """
-    verbose     = options.verbose
-    chan        = Channel(BUFSIZE)
-    s           = None
+    verbose = options.verbose
+    chan = Channel(BUFSIZE)
+    s = None
     (cnx, addr) = (None, None)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('', options.port))
@@ -54,11 +61,13 @@ def actuallyRunTheDaemon(options):
                 acceptMsg = "CONNECTION FROM %s" % str(addr)
                 if verbose:
                     print(acceptMsg)
-                print("BRANCH TO options.accessLog.log()")  ; sys.stdout.flush()
+                print("BRANCH TO options.accessLog.log()")
+                sys.stdout.flush()
                 options.accessLog.log(acceptMsg)
-                print("BACK FROM options.access.log()")  ; sys.stdout.flush()
+                print("BACK FROM options.access.log()")
+                sys.stdout.flush()
 
-                while 1:
+                while True:
                     chan.clear()
 
 #                   print "BRANCH TO recvFromCnx"  ; sys.stdout.flush()
@@ -76,8 +85,8 @@ def actuallyRunTheDaemon(options):
                         print("    expectedSerial %s" % msg.expectedSerial)
                         print("    actualSerial   %s" % msg.actualSerial)
                         text = \
-                        "mismatch, domain %s: expected serial %s, got %s" % (
-                           msg.zoneName, msg.expectedSerial, msg.actualSerial)
+                            "mismatch, domain %s: expected serial %s, got %s" % (
+                                msg.zoneName, msg.expectedSerial, msg.actualSerial)
                         options.alertzLog.log(text)
 
                     elif msgNdx == 1:
@@ -85,7 +94,7 @@ def actuallyRunTheDaemon(options):
                         print("GOT CORRUPT LIST MSG")
                         print("    timestamp      %s" % msg.timestamp)
                         print("    seqNbr         %s" % msg.seqNbr)
-                        text = "corrupt list: %s" % ( msg.seqNbr)
+                        text = "corrupt list: %s" % (msg.seqNbr)
                         options.alertzLog.log(text)
 
                     elif msgNdx == 2:
@@ -95,7 +104,7 @@ def actuallyRunTheDaemon(options):
                         running = False
                         s.close()
                         # XXX STUB: log the message
-                        text = "shutdown: %s" % ( msg.remarks)
+                        text = "shutdown: %s" % (msg.remarks)
                         options.alertzLog.log(text)
 
                     cnx.close()
@@ -103,7 +112,8 @@ def actuallyRunTheDaemon(options):
 
             except KeyboardInterrupt as ke:
                 print("<keyboard interrupt received while connection open>")
-                if cnx: cnx.close()
+                if cnx:
+                    cnx.close()
                 running = False
 
     except KeyboardInterrupt as ke:
@@ -119,57 +129,59 @@ def actuallyRunTheDaemon(options):
 # GET LOCK ON APP; FINALLY BLOCK FOR THAT LOCK
 #####################################################################
 
+
 def setupTheApp(options):
     """
     Gets a lock on the app directory, sets up log manager and related
-    files, runs the daemon, and then unlocks the app directory in a 
+    files, runs the daemon, and then unlocks the app directory in a
     finally block.
     """
-    appName     = options.appName
-    lockMgr     = None
-    accessLog   = None
-    errorLog    = None
+    appName = options.appName
+    lockMgr = None
+    accessLog = None
+    errorLog = None
 
     try:
-        lockMgr             = serverutil.LockMgr(appName)
-        logMgr              = serverutil.LogMgr(options.logDir)
-        options.logMgr      = logMgr
+        lockMgr = serverutil.LockMgr(appName)
+        logMgr = serverutil.LogMgr(options.logDir)
+        options.logMgr = logMgr
 
-        accessLog           = logMgr.open('access')
-        options.accessLog   = accessLog
+        accessLog = logMgr.open('access')
+        options.accessLog = accessLog
 
-        alertzLog           = logMgr.open(appName)
-        options.alertzLog   = alertzLog
+        alertzLog = logMgr.open(appName)
+        options.alertzLog = alertzLog
 
-        errorLog            = logMgr.open('error')
-        foptions.errorLog    = errorLog
+        errorLog = logMgr.open('error')
+        foptions.errorLog = errorLog
 
         actuallyRunTheDaemon(options)
     finally:
         if lockMgr is not None:
             lockMgr.unlock()
 
+
 def setupUServer(options):
     """
     Actually starts a upaxBlockingServer running, then invokes wrapped
     code, then closes server in a finally block.
     """
-    noChanges       = options.noChanges
-    uDir            = options.uDir
-    usingSHA1       = not options.usingSHA3
-    verbose         = options.verbose
+    noChanges = options.noChanges
+    uDir = options.uDir
+    usingSHA1 = not options.usingSHA3
+    verbose = options.verbose
 
-    uServer         = upax.BlockingServer(uDir, usingSHA1)
+    uServer = upax.BlockingServer(uDir, usingSHA1)
     options.uServer = uServer
-    uLog            = uServer.log
-    options.uLog    = uLog
+    uLog = uServer.log
+    options.uLog = uLog
     if verbose:
         print("there were %7u files in %s at the beginning of the run" % (
-                len(uLog), uDir))
+            len(uLog), uDir))
 
 #   # ---------------------------------------------------------------
 #   # XXX This code expects a collection of files in inDir; it posts
-#   # each to uDir -- and so is not relevant for our purposes.  THIS 
+#   # each to uDir -- and so is not relevant for our purposes.  THIS
 #   # IS HERE AS AN EXAMPLE OF HOW TO WRITE DATA TO uServer
 #   # ---------------------------------------------------------------
 #   src = args.pgmNameAndVersion    # what goes in the logEntry src field
@@ -197,6 +209,7 @@ def setupUServer(options):
 #####################################################################
 # HANDLE JUST_SHOW; GET LOCK ON U_DIR; FINALLY FOR THAT LOCK
 #####################################################################
+
 
 def invokeTheDaemon(options):
     """

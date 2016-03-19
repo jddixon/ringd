@@ -3,7 +3,7 @@ cd ~/dev/py/ringd
 rm -rf build
 
 pySloc -v  $@ \
-    bash:countem bash:installit bash:test.all   \
+    bash:auto8it bash:countem bash:installit bash:test.all   \
     not#:MANIFEST.in                            \
     py:ringClient py:ringDaemon                 \
 

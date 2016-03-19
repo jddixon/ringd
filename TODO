@@ -1,5 +1,9 @@
 ~/dev/py/ringd/TODO
 
+2016-03-18
+    * ERROR in testRingProtocolSerialization.py (x2)
+        - the '_name in __slots__ error
+
 2012-12-27
     * need to clearly determine who can use the logs
         - currently set up for U server only
