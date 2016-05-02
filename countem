@@ -1,10 +1,7 @@
-cd ~/dev/py/ringd
+#!/usr/bin/env bash
 
-rm -rf build
+cd $DEV_BASE/py/ringd
 
-pySloc -v  $@ \
-    bash:auto8it bash:countem bash:installit bash:test.all   \
-    not#:MANIFEST.in                            \
-    py:ringClient py:ringDaemon                 \
+rm -rf build/* myApps/* 
 
-
+pySloc  -X dist -v $@

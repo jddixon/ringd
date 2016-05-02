@@ -7,11 +7,12 @@ import os
 import socket
 import sys
 import time
-import serverutil
-from io import StringIO
+
 
 import u
 import upax
+
+from xlattice.procLock import ProcLockMgr
 
 import fieldz.fieldTypes as F
 import fieldz.msgSpec as M
@@ -142,7 +143,7 @@ def setupTheApp(options):
     errorLog = None
 
     try:
-        lockMgr = serverutil.LockMgr(appName)
+        lockMgr = ProcLockMgr(appName)
         logMgr = serverutil.LogMgr(options.logDir)
         options.logMgr = logMgr
 
