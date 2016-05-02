@@ -16,8 +16,8 @@ __all__ = ['__version__', '__version_date__', 'BUFSIZE',
            ]
 
 # - exported constants ----------------------------------------------
-__version__      = '0.2.2'
-__version_date__ = '2016-03-18'
+__version__      = '0.2.3'
+__version_date__ = '2016-05-02'
 BUFSIZE = 64 * 1024   # must be big enough for all using protocols
 
 # -------------------------------------------------------------------
