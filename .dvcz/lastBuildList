@@ -1,0 +1,53 @@
+-----BEGIN RSA PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoM2sBgX0ChP2JriXkOxS
+e2FjHYVzBGkNvgf0vIAa7FFYZi2pWmxBAVXgl3tTiB3quqqud/MbKqdejM6gkKBK
+v8f7hlcBQLD6BLIZ/RRfhIElc+WlDVfKSnBTB4va5qTQAgvuq5i8+oMj7G8WEy5d
+7cYucWyUJMtHvT4pCDtBWeeqQ62tByWjv34Ud/+A9Mjf0leiWxM3tiToVsqIKb4s
+zPjEShF9rvcNa9XEy1dKpcDz9Szbm2SlxOgM83fDDGtOq4SSCSqndtxrOvXXPB57
+H1mJV/FmerbXRPm5ERJVNIxtLk7Gr2Ce45FVlWyJGMhpfVlKkkk+bRQ02OFfazJI
+GQIDAQAB
+-----END RSA PUBLIC KEY-----
+ringd v0.2.4
+2016-05-31 04:30:28
+# START CONTENT #
+ringd
+ .dvcz
+  projCfg 6fd9bbef47772703d9ddbadb82d35e81154b12b7
+  projCfg.local fd1f33ceff9622cc63eadba52aa34d3278ea8c04
+  version 85e831d591053603f1628a4de4bcca4686eb4f87
+ .gitignore 274228c81d7b75ce1888567cdfb763aacfcd74db
+ CHANGES b007701697557eac46a869c8ffa2ad79ae495e52
+ LICENSE.md 50a6fc1b15e967d1dc37ba7559cf121a66240830
+ MANIFEST.in 40a229dcafefdaad08383d1659b025ef06bb53af
+ README 6df713adf5e9b96b4aba784bda89316512895c78
+ README.md 0cb3a93097fe4a248f79875ddc1bedb75c95f16a
+ TODO dfcbe863c887c0f79ca6ef031c51fabc658bc813
+ bkp2U b9d26380637c1fab5189abb3f4979b25b5e5f5ca
+ countem e2707b7cdf6c652116a3a7780be06a85691261cd
+ dist
+  ringd-0.1.0.tar.gz 2280f9ddfe3c257d828de16b3d27d7c7161ea125
+  ringd-0.2.0.tar.gz fc067d25b99a3088b358adf6eed45664f6161f24
+  ringd-0.2.1.tar.gz fe1a15f3eb719b67f891033ad0fb0cf411331817
+  ringd-0.2.2.tar.gz e57af26457abd6e9e499af5fb95ade350951ef61
+  ringd-0.2.3.tar.gz a328c3305b3e1d6409f71a194612a8c33084ebf0
+  ringd-0.2.4.tar.gz ec33a369cae3e3ef701c4310e8bd974cdcea9d6e
+ ghpDoc
+  index.md beb9d019d4d5d7dab939e078712a115ccc5eba6c
+ installit a8a497734779dff53f0e9c3d567ce1a04a594c15
+ myApps
+ ringClient 107ba5d429258f3b5631459ad0d61c5a4e077021
+ ringDaemon 8195430b595130da46e062b8dae771fc3da4c055
+ ringHostInfoProto.py 9ccf01b0de08d8cc1fafcdd383b9c38649080488
+ ringProtoSpec.py 825d24416ff34fc13a71bdd133198ee930b5b6f9
+ ringd
+  __init__.py c91ca281b7c8243de34d954d2ed2a31e5212ac54
+  chanIO.py 4c41909e0deb706f4f7bb8ccc638554416fe6e89
+  daemon.py 3c47d4d076c32fe842a926c1925769e0c37f1a9f
+ setup.py c3f6e6969bbf0d70f3bee770a4c5ea9db2bdfb00
+ styleit 90da2a6e5d147543052b56d7f1b079496c9f7a0e
+ test.all baa887e6e3bc76aa3c0f6259703085c9e23193db
+ testRingHostInfoProto.py 26583afadd9a461487060b052f2a63045ae54fe3
+ testRingProtoSerialization.py 6e4f5420c38658fdc867de3b8bc0ede36db0d18a
+# END CONTENT #
+
+lGeWjWXEAjcAH1JvwOmKPz7VvTlZTvQtGexFzBHLsJP8Xd7hPZZebAIrWFFrUo6+vptQqJ0Lco8COC9tBAzAq+nlXrNFEiXkWxg1Oy8ylvaF9n5KBV9sB+8Rrlx6CCLKkc+Y0xtJ5gGEQjEulyeeWe+jKbWmS3MGnP7NsTmsFGBWjntnkLRf7nRPRLT3eOHfLWh8+oWmJba88kG8oxAaeAeJLfI0JKJYncbxCv1xhmqCdubaKKTgF2+PoQegZ/Elp4EoUbSzF2WusMqllkxMFHIm2XUbpiDIDpYaHAcMh7Fy0SvclCPzk/RJaxKvlwetm1Nkmhw0h74kd5WB1vLZyw==

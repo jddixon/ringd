@@ -4,9 +4,8 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/ringd
   
-  rm -rf build/* myApps/* 
+  autopep8 -ai -r ringd ringDaemon ringClient *.py
   
-  pySloc -L py  -X dist -v $@
 else
   echo "DEV_BASE is not defined"
 fi

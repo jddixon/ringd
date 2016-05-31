@@ -22,7 +22,7 @@ message     error
 message     hello
  dunno      lString?
 
-message     keepAlive 
+message     keepAlive
  text       lString?
 
 message     logEntry
