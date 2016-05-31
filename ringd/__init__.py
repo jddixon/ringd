@@ -16,8 +16,8 @@ __all__ = ['__version__', '__version_date__', 'BUFSIZE',
            ]
 
 # - exported constants ----------------------------------------------
-__version__      = '0.2.3'
-__version_date__ = '2016-05-02'
+__version__ = '0.2.4'
+__version_date__ = '2016-05-30'
 BUFSIZE = 64 * 1024   # must be big enough for all using protocols
 
 # -------------------------------------------------------------------
@@ -33,4 +33,3 @@ RING_HOST_INFO_FILE = 'hostInfo'
 RING_HOST_INFO_PROTO    = \
     StringProtoSpecParser(StringIO(RING_HOST_INFO_PROTO_SPEC)).parse()
 RINGD_PROTO = StringProtoSpecParser(StringIO(RING_PROTO_SPEC)).parse()
-

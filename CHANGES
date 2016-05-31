@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.2.4
+    2016-05-30
+        * add bkp2U, other bash scripts                             SLOC  957
 v0.2.3
     2016-05-02
         * add .dvcz, projCfg*                                       SLOC  937
@@ -23,6 +26,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 

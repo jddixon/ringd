@@ -1,6 +1,6 @@
 # ~/dev/py/pzog/ringHostInfoProto.py
 
-RING_HOST_INFO_PROTO_SPEC="""
+RING_HOST_INFO_PROTO_SPEC = """
 protocol org.xlattice.pzog.ringHostInfo
 
 # This represents the contents of a file containing data on several
