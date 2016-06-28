@@ -25,5 +25,9 @@ setup(name='ringd',
       # scripts should have a globally unique name; they might be in a
       #   scripts/ subdir; SQuote the script name
       scripts=['ringClient', 'ringDaemon'],
-      # MISSING url
+      # MISSING description
+      classifiers=[
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 3',
+      ],
       )
