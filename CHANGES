@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.2.5
+    2016-06-28
+        * add ghpDoc/{css,img}/                                     SLOC 1464
 v0.2.4
     2016-05-30
         * add bkp2U, other bash scripts                             SLOC  957
@@ -26,6 +29,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 
