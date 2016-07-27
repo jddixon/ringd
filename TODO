@@ -1,5 +1,9 @@
 ~/dev/py/ringd/TODO
 
+2016-07-27
+    * add/correct lockMgr, logMgr                                       * DONE
+    * some fieldz bugs remain
+
 2016-03-18
     * ERROR in testRingProtocolSerialization.py (x2)
         - the '_name in __slots__ error
