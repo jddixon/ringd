@@ -7,12 +7,11 @@ import os
 import socket
 import sys
 import time
-
-
 import u
 import upax
 
-from xlattice.procLock import ProcLockMgr
+from xlattice.ftLog import LogMgr
+from xlattice.procLock import ProcLock
 
 import fieldz.fieldTypes as F
 import fieldz.msgSpec as M
@@ -143,8 +142,8 @@ def setupTheApp(options):
     errorLog = None
 
     try:
-        lockMgr = ProcLockMgr(appName)
-        logMgr = serverutil.LogMgr(options.logDir)
+        lockMgr = ProcLock(appName)
+        logMgr = LogMgr(options.logDir)
         options.logMgr = logMgr
 
         accessLog = logMgr.open('access')
@@ -157,7 +156,12 @@ def setupTheApp(options):
         foptions.errorLog = errorLog
 
         actuallyRunTheDaemon(options)
+    except:
+        print_exc()
+        sys.exit(1)
     finally:
+        if logMgr is not None:
+            logMgr.close()
         if lockMgr is not None:
             lockMgr.unlock()
 
@@ -168,21 +172,21 @@ def setupUServer(options):
     code, then closes server in a finally block.
     """
     noChanges = options.noChanges
-    uDir = options.uDir
+    uPath = options.uPath
     usingSHA1 = not options.usingSHA3
     verbose = options.verbose
 
-    uServer = upax.BlockingServer(uDir, usingSHA1)
+    uServer = upax.BlockingServer(uPath, usingSHA1)
     options.uServer = uServer
     uLog = uServer.log
     options.uLog = uLog
     if verbose:
         print("there were %7u files in %s at the beginning of the run" % (
-            len(uLog), uDir))
+            len(uLog), uPath))
 
 #   # ---------------------------------------------------------------
 #   # XXX This code expects a collection of files in inDir; it posts
-#   # each to uDir -- and so is not relevant for our purposes.  THIS
+#   # each to uPath -- and so is not relevant for our purposes.  THIS
 #   # IS HERE AS AN EXAMPLE OF HOW TO WRITE DATA TO uServer
 #   # ---------------------------------------------------------------
 #   src = args.pgmNameAndVersion    # what goes in the logEntry src field
@@ -201,7 +205,7 @@ def setupUServer(options):
 
 #   if verbose:
 #       print "there are %7u files in %s at the end of the run" % (
-#               len(log), uDir)         # FOO
+#               len(log), uPath)         # FOO
     try:
         setupTheApp(options)
     finally:
@@ -215,7 +219,7 @@ def setupUServer(options):
 def invokeTheDaemon(options):
     """
     Completes setting up the namespace; if this isn't a "just-show" run,
-    gets a lock on uDir, invokes wrapped code, and releases uDir lock
+    gets a lock on uPath, invokes wrapped code, and releases uPath lock
     in a finally block.
     """
     if options.verbose or options.showVersion or options.justShow:
@@ -237,17 +241,22 @@ def invokeTheDaemon(options):
         print('testing          = ' + str(options.testing))
         print('timestamp        = ' + str(options.timestamp))
         print('usingSHA3        = ' + str(options.usingSHA3))
-        print('uDir             = ' + str(options.uDir))
+        print('uPath            = ' + str(options.uPath))
         print('verbose          = ' + str(options.verbose))
 
-    uLock = None
+    lockMgr = None
+    logMgr = None
     if not options.justShow:
-        uLock = u.ULock(options.uDir)
         try:
-            if uLock.getLock():
-                setupUServer(options)
-            else:
-                print('could not get lock on %s' % options.uDir)
+            lockMgr = ProcLock(options.uPath)
+            logMgr = LogMgr(options.logDir)
+            options.logMgr = logMgr
+            setupUServer(options)
+        except:
+            print_exc()
+            sys.exit(1)
         finally:
-            if uLock is not None:
-                uLock.releaseLock()
+            if logMgr is not None:
+                logMgr.close()
+            if lockMgr is not None:
+                lockMgr.unlock()
