@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.2.7
+    2016-08-27
+        * fix liences, setup.py                                     SLOC 1518
 v0.2.6
     2016-07-27
         * add/correct lockMgr, logMgr                               SLOC 1492
@@ -32,6 +35,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 

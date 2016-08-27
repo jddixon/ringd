@@ -1,5 +1,7 @@
 # ~/dev/py/ringd/.dvcz/projCfg.local
 
+txt:std:LICENSE-MIT.md
+
 code:std:.dvcz/projCfg.local
 code:std:.dvcz/projCfg
 code:std:.gitignore
@@ -7,7 +9,6 @@ code:std:MANIFEST.in
 
 # these should not be counted
 #txt:std:README.md
-#txt:std:LICENSE.md
 
 dir:clr:myApps
 dir:pkg:ringd
