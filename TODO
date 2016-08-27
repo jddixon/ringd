@@ -2,11 +2,11 @@
 
 2016-07-27
     * add/correct lockMgr, logMgr                                       * DONE
-    * some fieldz bugs remain
+    * some fieldz bugs remain                                           * FIXED
 
 2016-03-18
-    * ERROR in testRingProtocolSerialization.py (x2)
-        - the '_name in __slots__ error
+    * ERROR in testRingProtocolSerialization.py (x2)                    * FIXED
+        - the '_name in __slots__ error                                 * FIXED
 
 2012-12-27
     * need to clearly determine who can use the logs
