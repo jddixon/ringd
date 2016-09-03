@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.3.0
+    2016-09-02
+        * usingSHA1 -> usingSHA                                     SLOC 1529
 v0.2.7
     2016-08-27
         * fix liences, setup.py                                     SLOC 1518
@@ -35,6 +38,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 

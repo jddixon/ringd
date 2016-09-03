@@ -10,6 +10,7 @@ import time
 import u
 import upax
 
+from xlattice import Q
 from xlattice.ftLog import LogMgr
 from xlattice.procLock import ProcLock
 
@@ -173,10 +174,10 @@ def setupUServer(options):
     """
     noChanges = options.noChanges
     uPath = options.uPath
-    usingSHA1 = not options.usingSHA3
+    usingSHA = not options.usingSHA3
     verbose = options.verbose
 
-    uServer = upax.BlockingServer(uPath, usingSHA1)
+    uServer = upax.BlockingServer(uPath, usingSHA)
     options.uServer = uServer
     uLog = uServer.log
     options.uLog = uLog
@@ -194,9 +195,10 @@ def setupUServer(options):
 #   files = os.listdir(args.inDir)
 #   for file in files:
 #       pathToFile  = os.path.join(args.inDir, file)
-#       if usingSHA1:
+#       if usingSHA == Q.USING_SHA1:
 #           hash        = u.fileSHA1(pathToFile)
 #       else:
+#           # FIX ME FIX ME FIX ME
 #           hash        = u.fileSHA3(pathToFile)
 #       if noChanges:
 #           if verbose:     print 'would add %s %s' % (hash, pathToFile)
