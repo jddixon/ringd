@@ -10,7 +10,7 @@ import time
 import u
 import upax
 
-from xlattice import Q
+from xlattice import Q, checkUsingSHA
 from xlattice.ftLog import LogMgr
 from xlattice.procLock import ProcLock
 
@@ -177,6 +177,7 @@ def setupUServer(options):
     usingSHA = not options.usingSHA3
     verbose = options.verbose
 
+    checkUsingSHA(usingSHA)
     uServer = upax.BlockingServer(uPath, usingSHA)
     options.uServer = uServer
     uLog = uServer.log
@@ -197,8 +198,9 @@ def setupUServer(options):
 #       pathToFile  = os.path.join(args.inDir, file)
 #       if usingSHA == Q.USING_SHA1:
 #           hash        = u.fileSHA1(pathToFile)
-#       else:
-#           # FIX ME FIX ME FIX ME
+#       elif usingSHA == Q.USING_SHA2:
+#           hash        = u.fileSHA2(pathToFile)
+#       elif usingSHA == Q.USING_SHA3:
 #           hash        = u.fileSHA3(pathToFile)
 #       if noChanges:
 #           if verbose:     print 'would add %s %s' % (hash, pathToFile)
@@ -242,7 +244,7 @@ def invokeTheDaemon(options):
         print('showVersion      = ' + str(options.showVersion))
         print('testing          = ' + str(options.testing))
         print('timestamp        = ' + str(options.timestamp))
-        print('usingSHA3        = ' + str(options.usingSHA3))
+        print('usingSHA         = ' + str(options.usingSHA))
         print('uPath            = ' + str(options.uPath))
         print('verbose          = ' + str(options.verbose))
 

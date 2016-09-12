@@ -7,20 +7,20 @@ zPjEShF9rvcNa9XEy1dKpcDz9Szbm2SlxOgM83fDDGtOq4SSCSqndtxrOvXXPB57
 H1mJV/FmerbXRPm5ERJVNIxtLk7Gr2Ce45FVlWyJGMhpfVlKkkk+bRQ02OFfazJI
 GQIDAQAB
 -----END RSA PUBLIC KEY-----
-ringd v0.3.0
-2016-09-03 00:15:30
+ringd v0.3.1
+2016-09-12 22:55:19
 # BEGIN CONTENT #
 ringd
  .dvcz
-  builds 97c6f53b22290a2b849ec34a90337796706985a1
+  builds 00f304c527ca4739292aa537eed1cdc86907fa4d
   copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
-  lastBuildList c14b422aa7d62ddfbbf2b276004af429c0219082
+  lastBuildList ccc91a58ef92291ef7228a58f91068623a5d6fbc
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg a7212dc4d9e3e3f57d95427bf70786b661ca6a9a
   projCfg.local e7c9a8d78db59b6272ee1048e243438d1cdb2fc8
-  version c1fcd4d43afca063cff5b691ca26cd8d5e529091
+  version 726b62c255b66d25493a3c28e7df3c402e00007a
  .gitignore 2bc4bcb7826ea9b5fb999444fe18f6785df1de72
- CHANGES b240a6dcf20de08e2f1035a5d3a6fe92bdacf9ce
+ CHANGES 2f7fba4b287baa54b83c5de333194018a264b2fc
  LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 40a229dcafefdaad08383d1659b025ef06bb53af
  README 6df713adf5e9b96b4aba784bda89316512895c78
@@ -39,6 +39,7 @@ ringd
   ringd-0.2.6.tar.gz c9493dca5d8f6d1984e267d95c05c446403117d9
   ringd-0.2.7.tar.gz 62acaa363f3a13692abdd92cf852ea7b4cf6feca
   ringd-0.3.0.tar.gz 63ed7d615d7848e5a65921d64958184533a84ea8
+  ringd-0.3.1.tar.gz f8a10e476b4b602b3699a891d2903ff71bd62863
  ghpDoc
   css
    LICENSE.html5-boilerplate.md ded771b3245b190da0e81c76de5a80d41392c0a6
@@ -61,9 +62,9 @@ ringd
  ringHostInfoProto.py 9ccf01b0de08d8cc1fafcdd383b9c38649080488
  ringProtoSpec.py 825d24416ff34fc13a71bdd133198ee930b5b6f9
  ringd
-  __init__.py 51bc8351626804950d2b97ba30e5a07a0005c589
+  __init__.py 0172e2121ed33609f2487b375a80cbf5b2bff16b
   chanIO.py 4c41909e0deb706f4f7bb8ccc638554416fe6e89
-  daemon.py ddb42d14dce4309cb18f2f77a0e541ada893b9d0
+  daemon.py 3566cacb3beb194980da926cb32dca7f69fe36f5
  setup.py e7440b5907013bc7131b13d630e9f6e324af5e2d
  styleit 90da2a6e5d147543052b56d7f1b079496c9f7a0e
  test.all 63dda136b45a694f50154bed00c0cd27cb8129db
@@ -71,4 +72,4 @@ ringd
  testRingProtoSerialization.py 6e4f5420c38658fdc867de3b8bc0ede36db0d18a
 # END CONTENT #
 
-ARxloT6t/zo4A81ubAkUV+O8PsHGFBlIqN/UpzFrr9wlquOkHCrkeJsMKn8AzCO3PrN9t/iLw1qiM/fhRS3L/p+SGw/jwQ4heuW7H/rxZrcu50tLogx/prejXBkhxsiP1dQvhhefPA0H+SzmTfa0HZl9NI7c4kTzYDSSIb/ssOO/z/jHIrGAIQN2jiICYNVVUoT7jIFgrfxR74csqMKAk8+PZIHohp3dVSLAU0/xjPQdCIe7fTvh5Tg2yfhUakHB3zSe7oKh55AIO964J7pCjQadoXjSVsWnXzAaers7NvluaynC1wvDl1bNhe6ZwnGESNU8WFd8x6pp3Z+96frZdA==
+MF0OZYZHjoHyv2+yexOEO0B/rPt3iWrnHFwwZfafJQYAQVdveheJ5iglWipi9HSKfyTfBAki21TiRrMfczaSnR0GsmvWrBrfn+vcwPPFd9L77OoCwqkTMZJAmu/VNIcE72I7TXUML9HHxwb+yZ3xxgzUJr31SAHeAHG06xmaq3EzV/cE2N0vdDu9HmSSf7EciON/WgLL9c7f6+rsIuQoqo5dlurCjYcriMhRqIQHyo80skYY+Mo/7kI+AeBe16NomBvwYp29GWUJy8HRbVcw7mFxJCyI2p7aCF8TwkykjYSK1eTvye8/Ot/RuKdo/XQ39PQ95G+hq68D48YpbdPXxA==
