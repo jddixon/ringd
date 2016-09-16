@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # ~/dev/py/ringd/ringDaemon
 
@@ -10,6 +10,8 @@ from argparse import ArgumentParser
 
 import u
 import upax
+from xlattice import (Q, checkUsingSHA,
+                      parseUsingSHA, fixUsingSHA, showUsingSHA, checkUPath)
 from ringd import *
 from ringd.daemon import *
 
@@ -25,9 +27,6 @@ def main():
     # -- parse the command line -------------------------------------
     # see docs.python.org/library/argparse.html
     parser = ArgumentParser('daemon participating in the house ring')
-
-    parser.add_argument('-3', '--usingSHA3', action='store_true',
-                        help='use SHA3, and so 256-bit keys')
 
     parser.add_argument('-a', '--appDir', default=RINGD_APP_DIR,
                         help='where we keep daemon data')
@@ -60,21 +59,19 @@ def main():
     parser.add_argument('-t', '--showTimestamp', action='store_true',
                         help='show run timestamp')
 
-    parser.add_argument('-u', '--uDir', default='U',
-                        help='base name of  U/ directory, default to U')
-
     parser.add_argument('-V', '--showVersion', action='store_true',
                         help='show version number and date')
-
-    parser.add_argument('-v', '--verbose', action='store_true',
-                        help='talk a lot')
 
     parser.add_argument('-z', '--noChanges', action='store_true',
                         help="don't actually write anything to disk")
 
+    parseUsingSHA(parser)
+
     args = parser.parse_args()      # a Namespace object
 
     # -- fixups -----------------------------------------------------
+    fixUsingSHA(args)
+
     args.pgmNameAndVersion = "%s v%s %s" % (args.appName,
                                             __version__, __version_date__)
 
@@ -89,6 +86,8 @@ def main():
     args.timestamp = timestamp
 
     # -- sanity checks ----------------------------------------------
+    checkUsingSHA(args.usingSHA)
+    checkUPath(parser, args, mustExist=True)
     if not os.path.exists(args.appDir):
         print("app directory '%s' does not exist" % args.appDir)
         sys.exit(1)
@@ -100,19 +99,23 @@ def main():
     if not os.path.exists(args.logDir):
         os.mkdir(args.logDir)
 
-    uDirParts = args.uDir.split('/')
-    if len(uDirParts) > 1:
-        print("uDir may not contain any slashes: aborting")
+    uPathParts = args.uPath.split('/')
+    if len(uPathParts) > 1:
+        print("uPath may not contain any slashes: aborting")
         sys.exit(1)
 
     # fixups --------------------------------------------------------
-    if args.uDir and args.uDir[-1] == '/':
-        args.uDir = args.uDir[:-1]          # drop any trailing slash
-    args.uDir = os.path.join(args.configDir, args.uDir)
+    args.uPath = os.path.join(args.configDir, args.uPath)
+    checkUPath(parser, args)        # create uDir if it doesn't exist
+
+    if args.justShow or args.verbose:
+        # XXX STUB XXX
+        showUsingSHA(args)
 
     # -- do it ------------------------------------------------------
-    args.isClient = False
-    invokeTheDaemon(args)
+    if not args.justShow:
+        args.isClient = False
+        invokeTheDaemon(args)
 
 if __name__ == '__main__':
     main()

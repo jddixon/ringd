@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.3.2
+    2016-09-16
+        * add support for sha1/2/3                                  SLOC 1540
 v0.3.1
     2016-09-12
         * fix FIX_MEs                                               SLOC 1532
@@ -41,6 +44,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 
