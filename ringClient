@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # ~/dev/py/ringd/ringClient
 
@@ -10,6 +10,9 @@ from argparse import ArgumentParser
 
 import u
 import upax
+from xlattice import (Q, checkUsingSHA,
+                      parseUsingSHA, fixUsingSHA, showUsingSHA, checkUPath)
+
 from ringd import *
 from ringd.daemon import *
 
@@ -26,9 +29,6 @@ def main():
     # see docs.python.org/library/argparse.html
     parser = ArgumentParser(
         'client inserting CLJ postings into the house ring')
-
-    parser.add_argument('-3', '--usingSHA3', action='store_true',
-                        help='use SHA3, and so 256-bit keys')
 
     parser.add_argument('-a', '--appDir', default=RINGD_APP_DIR,
                         help='where we keep client data')
@@ -60,17 +60,18 @@ def main():
     parser.add_argument('-V', '--showVersion', action='store_true',
                         help='show version number and date')
 
-    parser.add_argument('-v', '--verbose', action='store_true',
-                        help='talk a lot')
-
     parser.add_argument('-z', '--noChanges', action='store_true',
                         help="don't actually write anything to disk")
+
+    parseUsingSHA(parser)
 
     args = parser.parse_args()      # a Namespace object
 
     # -- fixups -----------------------------------------------------
-    args.pgmNameAndVersion = "%s client v%s %s" % (args.appName,
-                                                   __version__, __version_date__)
+    fixUsingSHA(args)
+
+    args.pgmNameAndVersion = "%s client v%s %s" % (
+        args.appName, __version__, __version_date__)
 
     # the order of these statements is significant --------
     if args.testing:
@@ -83,6 +84,8 @@ def main():
     args.timestamp = timestamp
 
     # -- sanity checks ----------------------------------------------
+    checkUsingSHA(args.usingSHA)
+
     if not os.path.exists(args.appDir):
         print("app directory '%s' does not exist" % args.appDir)
         sys.exit(1)
@@ -104,9 +107,16 @@ def main():
         args.uDir = args.uDir[:-1]          # drop any trailing slash
     args.uDir = os.path.join(args.configDir, args.uDir)
 
+    if args.justShow or args.verbose:
+
+        # XXX STUB
+
+        showUsingSHA(args)
+
     # -- do it ------------------------------------------------------
-    args.isClient = True
-    invokeTheDaemon(args)
+    if not args.justShow:
+        args.isClient = True
+        invokeTheDaemon(args)
 
 if __name__ == '__main__':
     main()
