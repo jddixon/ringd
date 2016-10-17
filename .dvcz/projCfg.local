@@ -18,6 +18,6 @@ bash:std:countem
 bash:std:installit
 bash:std:test.all
 
-py:global:ringDaemon
-py:global:ringClient
+py:global:ring_daemon
+py:global:ring_client
 

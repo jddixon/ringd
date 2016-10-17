@@ -24,7 +24,7 @@ setup(name='ringd',
       #
       # scripts should have a globally unique name; they might be in a
       #   scripts/ subdir; SQuote the script name
-      scripts=['ringClient', 'ringDaemon'],
+      scripts=['ring_client', 'ring_daemon'],
       description='ring of servers connecting as a dense mesh using fieldz for communications',
       url='https://jddixon.github.io/ringd',
       classifiers=[
