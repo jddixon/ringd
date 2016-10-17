@@ -8,6 +8,8 @@ then
     -d ../ringd \
     -1L  \
     -u $DVCZ_UDIR \
+    -X cover \
+    -X htmlcov \
     -X .ssh \
     $@
   

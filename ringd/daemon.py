@@ -19,7 +19,7 @@ import fieldz.msgSpec as M
 import fieldz.typed as T
 
 from ringd import *
-from ringd.chanIO import *
+from ringd.chan_io import *
 
 from fieldz.chan import Channel
 from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl

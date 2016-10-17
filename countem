@@ -6,7 +6,7 @@ then
   
   rm -rf build/* myApps/* 
   
-  pySloc -L py ringClient ringDaemon  -X dist -v $@
+  runpysloc -L py ring_client ring_daemon  -X cover -X htmlcov -X dist -v $@
 else
   echo "DEV_BASE is not defined"
 fi

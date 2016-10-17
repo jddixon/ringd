@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.3.3
+    2016-10-17
+        * add pylint, coverage; rename files per PEP 8              SLOC 1670
 v0.3.2
     2016-09-16
         * add support for sha1/2/3                                  SLOC 1540
@@ -44,6 +47,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 
