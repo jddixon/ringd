@@ -1,0 +1,138 @@
+#     pzog/name-pairs-local
+
+acceptMsg                   accept_msg
+accessLog                   access_log
+ackMsg                      ack_msg
+ackSpec                     ack_spec
+actuallyRunTheDaemon        actually_run_the_daemon
+alertzLog                   alertz_log
+appDir                      app_dir
+appName                     app_name
+
+blockSize                   blockSize
+
+checkNode                   check_node
+clearLogs                   clear_logs
+configDir                   config_dir
+createFromKey               create_from_key
+createPrivateKey            create_private_key
+createRandomHost            create_random_host
+createRandomRing            create_random_ring
+
+digestSize                  digestSize
+doWhatever                  do_whatever
+dottedName                  dotted_name
+dottedQ                     dotted_q
+dumpBuffer                  dump_bufer
+dVal                        sha
+
+ec2Host                     ec2_host
+errMsg                      err_msg
+errorLog                    error_log
+
+expectedID                  expected_id
+
+fieldSpec                   field_spec
+
+
+
+
+
+
+getIDAndPublicKeyForNode    get_id_and_public_key_for_node
+getRSAPublicKeyFromPrivate  get_rsa_public_key_from_private
+
+
+hashFactory                 hash_factory
+hexNodeID                   hex_node_id
+hostInfoFile                host_info_file
+hostInfoValues              host_info_values
+
+id                          id_
+inDir                       in_dir
+innerMsg                    inner_msg
+innerMsgSpec                inner_msg_spec
+innerMsg0                   inner_msg0
+innerMsg1                   inner_msg1
+invokeTheDaemon             invoke_the_daemon
+_ipAddr                     _ip_addr
+ipAddr                      ip_addr
+
+ke                          kexc
+
+leMsg                       le_msg
+leMsg2                      le_msg2
+leMsgSpec                   le_msg_spec
+leMsgValues                 le_msg_values
+lockMgr                     lock_mgr
+logMgr                      log_mgr
+logDir                      log_dir
+logEntryMsg                 log_entry_msg
+
+maxCount                    max_count
+msgLen                      msg_len
+msgNbr                      msg_nbr
+msgName                     msg_name
+msgNdx                      msg_ndx
+msgSpec                     msg_spec
+
+n                           nnn
+n2                          nn2
+n3                          nn3
+noChanges                   no_changes
+_nodeID                     _node_id
+nodeID                      node_id
+
+oldPosition                 old_position
+outerMsg                    outer_msg
+outerMsg0                   outer_msg0
+outerMsg1                   outer_msg1
+outerMsgSpec                outer_msg_spec
+
+pathToHostInfo              path_to_host_info
+pathToLog                   path_to_log
+pemKey                      pem_key
+pgmNameAndVersion           pgm_name_and_version
+_privateKey                 _private_key
+privateKey                  private_key
+protoName                   proto_name
+
+pType                       p_type
+_pubKey                     _pub_key
+pubKey                      pub_key
+
+readBack                    readback
+realNdx                     real_ndx
+recvFromCnx                 recv_from_cnx
+ringDataSpec                ring_data_spec
+ringDataValues              ring_data_values
+ringHostInfoProto           ring_host_info_proto
+ringProtoSpec               ring_proto_spec
+ringSize                    ring_size
+rsaPrivateKey               rsa_private_key
+
+s                           string
+sendOnCnx                   send_on_cnx
+sendToEndPoint              send_to_endpoint
+setupTheApp                 setup_the_app
+setupUServer                setup_u_server
+showTimestamp               show_timestamp
+sOM                         s_obj_model
+
+thisHost                    this_host
+
+uDirParts                   u_path_parts
+uLog                        u_log
+uPathParts                  u_path_parts
+uServer                     u_server
+
+vBuf                        v_buf
+
+
+doTestAck                   do_test_ack
+roundTripRingHostInfoInstancesToWireFormat round_trip_ring_host_info_instances_to_wire
+testAckWithAndWithoutText   test_ack_with_and_without_text
+testCaching                 test_caching
+testLEMsgSerialization      test_le_msg_serialization
+testRoundTripRingHostInfoInstancesToWireFormat test_round_trip_ring_host_info_instances_to_wire
+testRingHostInfoProto       test_ring_host_info_proto

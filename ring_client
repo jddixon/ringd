@@ -10,11 +10,18 @@ from argparse import ArgumentParser
 
 import u
 import upax
-from xlattice import (Q, checkUsingSHA,
-                      parseUsingSHA, fixUsingSHA, showUsingSHA, checkUPath)
+from xlattice import (QQQ, check_using_sha,
+                      parseUsingSHA, fix_using_sha, show_using_sha, check_u_path)
 
-from ringd import *
-from ringd.daemon import *
+from ringd import(__version__, __version_date__,
+                  RINGD_APP_DIR, RINGD_APP_NAME, RING_HOST_INFO_FILE,
+                  RINGD_PORT)
+
+# from ringd.daemon import *
+
+
+def invoke_the_client(options):
+    """ XXX STUB """
 
 
 def main():
@@ -30,19 +37,19 @@ def main():
     parser = ArgumentParser(
         'client inserting CLJ postings into the house ring')
 
-    parser.add_argument('-a', '--appDir', default=RINGD_APP_DIR,
+    parser.add_argument('-a', '--app_dir', default=RINGD_APP_DIR,
                         help='where we keep client data')
 
-    parser.add_argument('-H', '--hostInfoFile', default=RING_HOST_INFO_FILE,
+    parser.add_argument('-H', '--host_info_file', default=RING_HOST_INFO_FILE,
                         help='base name of the file')
 
-    parser.add_argument('-j', '--justShow', action='store_true',
+    parser.add_argument('-j', '--just_show', action='store_true',
                         help='show args and exit')
 
-    parser.add_argument('-L', '--logDir', default='logs',
+    parser.add_argument('-L', '--log_dir', default='logs',
                         help='name of log directory')
 
-    parser.add_argument('-n', '--appName', default=RINGD_APP_NAME,
+    parser.add_argument('-n', '--app_name', default=RINGD_APP_NAME,
                         help="name of the ring client's configuration subdirectory")
 
     parser.add_argument('-p', '--port', default=RINGD_PORT,
@@ -51,16 +58,16 @@ def main():
     parser.add_argument('-T', '--testing', action='store_true',
                         help='test run - write to ./testU')
 
-    parser.add_argument('-t', '--showTimestamp', action='store_true',
+    parser.add_argument('-t', '--show_timestamp', action='store_true',
                         help='show run timestamp')
 
-    parser.add_argument('-u', '--uDir', default='U',
+    parser.add_argument('-u', '--u_dir', default='U',
                         help='base name of  U/ directory, defaults to U')
 
-    parser.add_argument('-V', '--showVersion', action='store_true',
+    parser.add_argument('-V', '--show_version', action='store_true',
                         help='show version number and date')
 
-    parser.add_argument('-z', '--noChanges', action='store_true',
+    parser.add_argument('-z', '--no_changes', action='store_true',
                         help="don't actually write anything to disk")
 
     parseUsingSHA(parser)
@@ -68,55 +75,55 @@ def main():
     args = parser.parse_args()      # a Namespace object
 
     # -- fixups -----------------------------------------------------
-    fixUsingSHA(args)
+    fix_using_sha(args)
 
-    args.pgmNameAndVersion = "%s client v%s %s" % (
-        args.appName, __version__, __version_date__)
+    args.pgm_name_and_version = "%s client v%s %s" % (
+        args.app_name, __version__, __version_date__)
 
     # the order of these statements is significant --------
     if args.testing:
-        args.appDir = 'myApps'
-    args.configDir = os.path.join(args.appDir, args.appName)
-    args.pathToHostInfo = os.path.join(args.configDir, args.hostInfoFile)
-    args.logDir = os.path.join(args.configDir, args.logDir)
+        args.app_dir = 'myApps'
+    args.config_dir = os.path.join(args.app_dir, args.app_name)
+    args.path_to_host_info = os.path.join(args.config_dir, args.host_info_file)
+    args.log_dir = os.path.join(args.config_dir, args.log_dir)
     # end ordered statements ------------------------------
 
     args.timestamp = timestamp
 
     # -- sanity checks ----------------------------------------------
-    checkUsingSHA(args.usingSHA)
+    check_using_sha(args.using_sha)
 
-    if not os.path.exists(args.appDir):
-        print("app directory '%s' does not exist" % args.appDir)
+    if not os.path.exists(args.app_dir):
+        print("app directory '%s' does not exist" % args.app_dir)
         sys.exit(1)
 
-    if not os.path.exists(args.configDir):
-        print("config directory '%s' does not exist" % args.configDir)
+    if not os.path.exists(args.config_dir):
+        print("config directory '%s' does not exist" % args.config_dir)
         sys.exit(1)
 
-    if not os.path.exists(args.logDir):
-        os.mkdir(args.logDir)
+    if not os.path.exists(args.log_dir):
+        os.mkdir(args.log_dir)
 
-    uDirParts = args.uDir.split('/')
-    if len(uDirParts) > 1:
-        print("uDir may not contain any slashes: aborting")
+    u_path_parts = args.u_dir.split('/')
+    if len(u_path_parts) > 1:
+        print("u_dir may not contain any slashes: aborting")
         sys.exit(1)
 
     # fixups --------------------------------------------------------
-    if args.uDir and args.uDir[-1] == '/':
-        args.uDir = args.uDir[:-1]          # drop any trailing slash
-    args.uDir = os.path.join(args.configDir, args.uDir)
+    if args.u_dir and args.u_dir[-1] == '/':
+        args.u_dir = args.u_dir[:-1]          # drop any trailing slash
+    args.u_dir = os.path.join(args.config_dir, args.u_dir)
 
-    if args.justShow or args.verbose:
+    if args.just_show or args.verbose:
 
         # XXX STUB
 
-        showUsingSHA(args)
+        show_using_sha(args)
 
     # -- do it ------------------------------------------------------
-    if not args.justShow:
+    if not args.just_show:
         args.isClient = True
-        invokeTheDaemon(args)
+        invoke_the_client(args)
 
 if __name__ == '__main__':
     main()

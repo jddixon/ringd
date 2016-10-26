@@ -7,27 +7,27 @@ zPjEShF9rvcNa9XEy1dKpcDz9Szbm2SlxOgM83fDDGtOq4SSCSqndtxrOvXXPB57
 H1mJV/FmerbXRPm5ERJVNIxtLk7Gr2Ce45FVlWyJGMhpfVlKkkk+bRQ02OFfazJI
 GQIDAQAB
 -----END RSA PUBLIC KEY-----
-ringd v0.3.3
-2016-10-17 22:39:36
+ringd v0.3.4
+2016-10-26 19:55:28
 # BEGIN CONTENT #
 ringd
  .dvcz
-  builds 3a901d735db63ba99c4c475238f646755692f41a
+  builds 6763ce0683184171931fbb8d319881c06229c737
   copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
-  lastBuildList e4a57983fb02350b45fa9d4c1ad0e35d55fc5ffb
+  lastBuildList 73f9037eebe54136c03e6eabf261277b00770e67
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 582426a9b589e3c3998b6e2992cc6c788548a981
   projCfg.local 3f560c74c19ba5fa5284d396ee6e0befb1a2bae0
-  version 15d77ae9ddd416544306203251dcd1d788ee1403
+  version 1d0fbddb0c2a084e2354e3596b725362174398c1
  .gitignore 2bc4bcb7826ea9b5fb999444fe18f6785df1de72
- CHANGES 76ab3f57c3aa6b280933b957668e8665eee44529
+ CHANGES 8ce1a3f4be95f0ce32e9fad3a5fb3595aac526ca
  LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 40a229dcafefdaad08383d1659b025ef06bb53af
  README 6df713adf5e9b96b4aba784bda89316512895c78
  README.md 0cb3a93097fe4a248f79875ddc1bedb75c95f16a
  TODO 45394bfcc4a7d640909cfb69fec4a65c08efb56e
- bkp2U bfb391423c3e28b0147973023ad68ab3e62263ed
- checkCoverage c17285d7affb7cc8249f8fc1f922faaa69962e6a
+ bkp2U 5e7ad768431ad31c0a0838b9ff4bcb7ba5869422
+ checkCoverage 7fa4b53c7e805fd28ba5392180d9af793f206067
  countem f6296369387303beac731ac7c43b2eebdb567af0
  dist
   ringd-0.1.0.tar.gz 2280f9ddfe3c257d828de16b3d27d7c7161ea125
@@ -43,7 +43,8 @@ ringd
   ringd-0.3.1.tar.gz f8a10e476b4b602b3699a891d2903ff71bd62863
   ringd-0.3.2.tar.gz 1bc17ccf9af7ac2b5b20d3645c790024a319ca5a
   ringd-0.3.3.tar.gz c924ab5694b4fd3e1c871a73c9f4e35251787d3a
- doPyLint b6f187d48d9615af079f4440b805c577064dc78e
+  ringd-0.3.4.tar.gz ef076ef8202eefbbaf1ca485616b971599b70a50
+ doPyLint 79637782de5a32f262d97c21e9c5372c14d5b3b3
  ghpDoc
   css
    LICENSE.html5-boilerplate.md ded771b3245b190da0e81c76de5a80d41392c0a6
@@ -61,20 +62,23 @@ ringd
   index.md beb9d019d4d5d7dab939e078712a115ccc5eba6c
  installit a8a497734779dff53f0e9c3d567ce1a04a594c15
  myApps
+ name-pairs-local a8e7577a4e3e7e1c5c6e1e88c1823f461f9d70ba
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
- ring_client 9403d499ca862757cf040dcac380252f8e77ef96
- ring_daemon a29e95e9da1547044a4f77db3390ebb3f132ede5
+ renameLocal 19e4836cca965023e1342f85cc53a1c06e5ffe63
+ renamePerAPI 06acdd7a5d6bd407797aa09ef9b78469a1624520
+ ring_client 9695b1bf68b06fdcc2757946984d5fcb786ebe4a
+ ring_daemon f5be489b19f9f38637de7341ee0944257e048ce7
  ring_host_info_proto.py 9ccf01b0de08d8cc1fafcdd383b9c38649080488
  ring_proto_spec.py 825d24416ff34fc13a71bdd133198ee930b5b6f9
  ringd
-  __init__.py 078fefd4a7dc67a1544ef7f66669191a14788ac4
-  chan_io.py 4c41909e0deb706f4f7bb8ccc638554416fe6e89
-  daemon.py 2bbd9f69c625131b14c31901da6b1fbf5e9cbb97
- setup.py f84aa33ecfa6ba2e880ae45ed12748514ce877cd
+  __init__.py 0494a0275a2bc47fd4e8a07f6728f22bb19b347f
+  chan_io.py 89b2229d57c6fef56995decf1bb70f702f4d1d5d
+  daemon.py 3f42e02f26ab15417dfedcaf65612ba1a23d271e
+ setup.py 6f6cf8b1480ddcb1d43c95d96ed9fe872a38c151
  styleit 0b73a5f873fa6548d70e68763a1e4a469f261220
  test.all 24d985f3460209abf29761fdf0f6289a45b75823
- test_ring_host_info_proto.py 26583afadd9a461487060b052f2a63045ae54fe3
- test_ring_proto_serialization.py 6e4f5420c38658fdc867de3b8bc0ede36db0d18a
+ test_ring_host_info_proto.py 9cfa6e74b23ee9687d81e3e301340ab63bcd0763
+ test_ring_proto_serialization.py f65b1ca1913acc4850b27cf88a2443a253f92d8d
 # END CONTENT #
 
-aWFJcKXbdJM5PcgoWWkoKWZSbj7HiRndHXVvZRKET1NCtxMxPOIWQaaj6VBdN51tBp2Pr9PMYFiiEFUFXoINEj/9e+FH+zohO8Tj1/qyzOGq27pEGHLDhgoMlRii2HqXxjMACBBjsvVk5Lcsq11hLClGmX/93m9CqSxkKTYqcp8bqN12Eo37625hzOEMM0mEFlyEWWtF4wX8sa3CUGjQ3N5lRnbJBS/TPS6ZZHMJp4bWtEqTA3v2S70uMWv6yfMppF+ovgkrzaEvXci//PJfniakjC0A21TK8B4vXY8ol7S0iqNhwmSsI2t7jpMUyP3/fIbUvTR4urOGvD5Xv85AYQ==
+LYBgO7L4lV4xwVjbzIDQUglDWf2XJyt3nscEKAbIsyDvcPk24mDBRcvUVzbXLcAH8BqO1s/VRuK3KairmqY3upSUeH6z7DhDpwFrXbUmUDU/AlHs53sNaKVxEmhpiuMDMihhfNh28abiQJ66zHs3JBMzkHDDSL4hx6s4CCl1hlRhNaQETIowSc1xfc+JS0JqgY6DgzWazm65y2YOeoWnP1SktVbHSO2U9HxpphToc9uEVtl+IfvdzgzK/RS4anvaRQeQ8aXG4/omgHZuIvjssncJH8Fg2a6IUwV8rbJr23GgjPrHOArkS2afQpcQrZeOFaq3SITlbWGer6iS+GMLZg==

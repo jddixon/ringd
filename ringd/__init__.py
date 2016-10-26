@@ -2,8 +2,8 @@
 
 import os
 from io import StringIO
-from ringHostInfoProto import RING_HOST_INFO_PROTO_SPEC
-from ringProtoSpec import RING_PROTO_SPEC
+from ring_host_info_proto import RING_HOST_INFO_PROTO_SPEC
+from ring_proto_spec import RING_PROTO_SPEC
 from fieldz.parser import StringProtoSpecParser
 
 __all__ = ['__version__', '__version_date__', 'BUFSIZE',
@@ -16,8 +16,8 @@ __all__ = ['__version__', '__version_date__', 'BUFSIZE',
            ]
 
 # - exported constants ----------------------------------------------
-__version__ = '0.3.3'
-__version_date__ = '2016-10-17'
+__version__ = '0.3.4'
+__version_date__ = '2016-10-26'
 BUFSIZE = 64 * 1024   # must be big enough for all using protocols
 
 # -------------------------------------------------------------------
@@ -30,6 +30,6 @@ RINGD_APP_DIR = '/var/app'
 RINGD_APP_NAME = 'ringd'
 
 RING_HOST_INFO_FILE = 'hostInfo'
-RING_HOST_INFO_PROTO    = \
+RING_HOST_INFO_PROTO =\
     StringProtoSpecParser(StringIO(RING_HOST_INFO_PROTO_SPEC)).parse()
 RINGD_PROTO = StringProtoSpecParser(StringIO(RING_PROTO_SPEC)).parse()

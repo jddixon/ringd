@@ -1,6 +1,6 @@
 # ~/dev/py/ringd/ringd/daemon.py
 
-__all__ = ['clearLogs', 'invokeTheDaemon',
+__all__ = ['clear_logs', 'invoke_the_daemon',
            ]
 
 import os
@@ -10,16 +10,18 @@ import time
 import u
 import upax
 
-from xlattice import Q, checkUsingSHA
+from traceback import print_exc
+
+from xlattice import QQQ, check_using_sha
 from xlattice.ftLog import LogMgr
 from xlattice.procLock import ProcLock
 
 import fieldz.fieldTypes as F
-import fieldz.msgSpec as M
+import fieldz.msg_spec as M
 import fieldz.typed as T
 
-from ringd import *
-from ringd.chan_io import *
+from ringd import BUFSIZE
+from ringd.chan_io import recv_from_cnx
 
 from fieldz.chan import Channel
 from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
@@ -27,44 +29,44 @@ from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
 # DAEMON ------------------------------------------------------------
 
 
-def clearLogs(options):
-    logDir = options.logDir
-    print("DEBUG: clearLogs, logDir = '%s'" % logDir)
-    if os.path.exists(logDir):
-        if logDir.startswith('/') or logDir.startswith('..'):
-            raise RuntimeError("cannot delete %s/*" % logDir)
-        files = os.listdir(logDir)
+def clear_logs(options):
+    log_dir = options.log_dir
+    print("DEBUG: clearLogs, log_dir = '%s'" % log_dir)
+    if os.path.exists(log_dir):
+        if log_dir.startswith('/') or log_dir.startswith('..'):
+            raise RuntimeError("cannot delete %s/*" % log_dir)
+        files = os.listdir(log_dir)
         if files:
             if options.verbose:
                 print("found %u files" % len(files))
             for file in files:
-                os.unlink(os.path.join(logDir, file))
+                os.unlink(os.path.join(log_dir, file))
 
 
-def actuallyRunTheDaemon(options):
+def actually_run_the_daemon(options):
     """
     All necessary resources having been obtained, actually runs the
     daemon.
     """
     verbose = options.verbose
     chan = Channel(BUFSIZE)
-    s = None
+    skt = None
     (cnx, addr) = (None, None)
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', options.port))
-    s.listen(1)
+    skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    skt.bind(('', options.port))
+    skt.listen(1)
     try:
         running = True
         while running:
             print("\nWAITING FOR CONNECTION")              # DEBUG
-            cnx, addr = s.accept()
+            cnx, addr = skt.accept()
             try:
-                acceptMsg = "CONNECTION FROM %s" % str(addr)
+                accept_msg = "CONNECTION FROM %s" % str(addr)
                 if verbose:
-                    print(acceptMsg)
+                    print(accept_msg)
                 print("BRANCH TO options.accessLog.log()")
                 sys.stdout.flush()
-                options.accessLog.log(acceptMsg)
+                options.access_log.log(accept_msg)
                 print("BACK FROM options.access.log()")
                 sys.stdout.flush()
 
@@ -72,123 +74,126 @@ def actuallyRunTheDaemon(options):
                     chan.clear()
 
 #                   print "BRANCH TO recvFromCnx"  ; sys.stdout.flush()
-                    msgNdx = recvFromCnx(cnx, chan)  # may raise exception
+                    msg_ndx = recv_from_cnx(cnx, chan)  # may raise exception
 
-                    (msg, realNdx) = MsgImpl.read(chan, sOM)
-#                   print "  MSG_NDX: CALCULATED %s, REAL %s" % (
-#                                             msgNdx, realNdx)
+                    # XXX s_obj_model (the former sOM) is UNDEFINIED here
+                    (msg, real_ndx) = MsgImpl.read(chan, s_obj_model)
+                    # DEBUG
+                    print "  MSG_NDX: CALCULATED %s, REAL %s" % (
+                        msgNdx, realNdx)
+                    # END
                     # switch on message type
-                    if msgNdx == 0:
+                    if msg_ndx == 0:
                         print("GOT ZONE MISMATCH MSG")
                         print("    timestamp      %s" % msg.timestamp)
                         print("    seqNbr         %s" % msg.seqNbr)
                         print("    zoneName       %s" % msg.zoneName)
                         print("    expectedSerial %s" % msg.expectedSerial)
                         print("    actualSerial   %s" % msg.actualSerial)
-                        text = \
+                        text =\
                             "mismatch, domain %s: expected serial %s, got %s" % (
                                 msg.zoneName, msg.expectedSerial, msg.actualSerial)
-                        options.alertzLog.log(text)
+                        options.alertz_log.log(text)
 
-                    elif msgNdx == 1:
+                    elif msg_ndx == 1:
                         # timestamp, seqNb
                         print("GOT CORRUPT LIST MSG")
                         print("    timestamp      %s" % msg.timestamp)
                         print("    seqNbr         %s" % msg.seqNbr)
                         text = "corrupt list: %s" % (msg.seqNbr)
-                        options.alertzLog.log(text)
+                        options.alertz_log.log(text)
 
-                    elif msgNdx == 2:
+                    elif msg_ndx == 2:
                         # has one field, remarks
                         print("GOT SHUTDOWN MSG")
                         print("    remarks        %s" % msg.remarks)
                         running = False
-                        s.close()
+                        skt.close()
                         # XXX STUB: log the message
                         text = "shutdown: %s" % (msg.remarks)
-                        options.alertzLog.log(text)
+                        options.alertz_log.log(text)
 
                     cnx.close()
                     break                   # permit only one message/cnx
 
-            except KeyboardInterrupt as ke:
+            except KeyboardInterrupt:
                 print("<keyboard interrupt received while connection open>")
                 if cnx:
                     cnx.close()
                 running = False
 
-    except KeyboardInterrupt as ke:
+    except KeyboardInterrupt:
         print("<keyboard interrupt received while listening>")
         # listening socket will be closed
     finally:
         if cnx:
             cnx.close()
-        if s:
-            s.close()
+        if skt:
+            skt.close()
 
 #####################################################################
 # GET LOCK ON APP; FINALLY BLOCK FOR THAT LOCK
 #####################################################################
 
 
-def setupTheApp(options):
+def setup_the_app(options):
     """
     Gets a lock on the app directory, sets up log manager and related
     files, runs the daemon, and then unlocks the app directory in a
     finally block.
     """
-    appName = options.appName
-    lockMgr = None
-    accessLog = None
-    errorLog = None
+    app_name = options.app_name
+    lock_mgr = None
+    access_log = None
+    error_log = None
 
     try:
-        lockMgr = ProcLock(appName)
-        logMgr = LogMgr(options.logDir)
-        options.logMgr = logMgr
+        lock_mgr = ProcLock(app_name)
+        log_mgr = LogMgr(options.log_dir)
+        options.log_mgr = log_mgr
 
-        accessLog = logMgr.open('access')
-        options.accessLog = accessLog
+        access_log = log_mgr.open('access')
+        options.access_log = access_log
 
-        alertzLog = logMgr.open(appName)
-        options.alertzLog = alertzLog
+        alertz_log = log_mgr.open(app_name)
+        options.alertz_log = alertz_log
 
-        errorLog = logMgr.open('error')
-        foptions.errorLog = errorLog
+        error_log = log_mgr.open('error')
+        options.error_log = error_log
 
-        actuallyRunTheDaemon(options)
+        actually_run_the_daemon(options)
     except:
         print_exc()
         sys.exit(1)
     finally:
-        if logMgr is not None:
-            logMgr.close()
-        if lockMgr is not None:
-            lockMgr.unlock()
+        if log_mgr is not None:
+            log_mgr.close()
+        if lock_mgr is not None:
+            lock_mgr.unlock()
 
 
-def setupUServer(options):
+def setup_u_server(options):
     """
     Actually starts a upaxBlockingServer running, then invokes wrapped
     code, then closes server in a finally block.
     """
-    noChanges = options.noChanges
-    uPath = options.uPath
-    usingSHA = not options.usingSHA3
+    no_changes = options.no_changes
+    u_path = options.u_path
+    using_sha = not options.using_sha3
     verbose = options.verbose
 
-    checkUsingSHA(usingSHA)
-    uServer = upax.BlockingServer(uPath, usingSHA)
-    options.uServer = uServer
-    uLog = uServer.log
-    options.uLog = uLog
+    check_using_sha(using_sha)
+    u_server = upax.BlockingServer(u_path, using_sha)
+    options.u_server = u_server
+    u_log = u_server.log
+    options.u_log = u_log
     if verbose:
         print("there were %7u files in %s at the beginning of the run" % (
-            len(uLog), uPath))
+            len(u_log), u_path))
 
 #   # ---------------------------------------------------------------
 #   # XXX This code expects a collection of files in inDir; it posts
-#   # each to uPath -- and so is not relevant for our purposes.  THIS
+#   # each to u_path -- and so is not relevant for our purposes.  THIS
 #   # IS HERE AS AN EXAMPLE OF HOW TO WRITE DATA TO uServer
 #   # ---------------------------------------------------------------
 #   src = args.pgmNameAndVersion    # what goes in the logEntry src field
@@ -196,71 +201,71 @@ def setupUServer(options):
 #   files = os.listdir(args.inDir)
 #   for file in files:
 #       pathToFile  = os.path.join(args.inDir, file)
-#       if usingSHA == Q.USING_SHA1:
+#       if using_sha == Q.USING_SHA1:
 #           hash        = u.fileSHA1(pathToFile)
-#       elif usingSHA == Q.USING_SHA2:
+#       elif using_sha == Q.USING_SHA2:
 #           hash        = u.fileSHA2(pathToFile)
-#       elif usingSHA == Q.USING_SHA3:
+#       elif using_sha == Q.USING_SHA3:
 #           hash        = u.fileSHA3(pathToFile)
-#       if noChanges:
+#       if no_changes:
 #           if verbose:     print 'would add %s %s' % (hash, pathToFile)
 #       else:
 #           uServer.put (pathToFile, hash, src)
 
 #   if verbose:
 #       print "there are %7u files in %s at the end of the run" % (
-#               len(log), uPath)         # FOO
+#               len(log), u_path)         # FOO
     try:
-        setupTheApp(options)
+        setup_the_app(options)
     finally:
-        uServer.close()
+        u_server.close()
 
 #####################################################################
 # HANDLE JUST_SHOW; GET LOCK ON U_DIR; FINALLY FOR THAT LOCK
 #####################################################################
 
 
-def invokeTheDaemon(options):
+def invoke_the_daemon(options):
     """
     Completes setting up the namespace; if this isn't a "just-show" run,
-    gets a lock on uPath, invokes wrapped code, and releases uPath lock
+    gets a lock on u_path, invokes wrapped code, and releases u_path lock
     in a finally block.
     """
-    if options.verbose or options.showVersion or options.justShow:
-        print(options.pgmNameAndVersion)
-    if options.showTimestamp:
+    if options.verbose or options.show_version or options.just_show:
+        print(options.pgm_name_and_version)
+    if options.show_timestamp:
         print('run at %s GMT' % timestamp)   # could be prettier
     else:
         print()                               # there's a comma up there
 
-    if options.justShow or options.verbose:
-        print('configDir        = ' + str(options.configDir))
-        print('justShow         = ' + str(options.justShow))
-        print('logDir           = ' + str(options.logDir))
-        print('noChanges        = ' + str(options.noChanges))
-        print('pathToHostInfo   = ' + str(options.pathToHostInfo))
+    if options.just_show or options.verbose:
+        print('config_dir       = ' + str(options.config_dir))
+        print('just_show        = ' + str(options.just_show))
+        print('log_dir          = ' + str(options.log_dir))
+        print('no_changes       = ' + str(options.no_changes))
+        print('path_to_host_info= ' + str(options.path_to_host_info))
         print('port             = ' + str(options.port))
-        print('showTimestamp    = ' + str(options.showTimestamp))
-        print('showVersion      = ' + str(options.showVersion))
+        print('show_timestamp   = ' + str(options.show_timestamp))
+        print('show_version     = ' + str(options.show_version))
         print('testing          = ' + str(options.testing))
         print('timestamp        = ' + str(options.timestamp))
-        print('usingSHA         = ' + str(options.usingSHA))
-        print('uPath            = ' + str(options.uPath))
+        print('using_sha        = ' + str(options.using_sha))
+        print('u_path           = ' + str(options.u_path))
         print('verbose          = ' + str(options.verbose))
 
-    lockMgr = None
-    logMgr = None
-    if not options.justShow:
+    lock_mgr = None
+    log_mgr = None
+    if not options.just_show:
         try:
-            lockMgr = ProcLock(options.uPath)
-            logMgr = LogMgr(options.logDir)
-            options.logMgr = logMgr
-            setupUServer(options)
+            lock_mgr = ProcLock(options.u_path)
+            log_mgr = LogMgr(options.log_dir)
+            options.log_mgr = log_mgr
+            setup_u_server(options)
         except:
             print_exc()
             sys.exit(1)
         finally:
-            if logMgr is not None:
-                logMgr.close()
-            if lockMgr is not None:
-                lockMgr.unlock()
+            if log_mgr is not None:
+                log_mgr.close()
+            if lock_mgr is not None:
+                lock_mgr.unlock()

@@ -1,0 +1,9 @@
+# ringd/renamePerAPI
+
+sdRenameInFiles -v1rw                   \
+    -m ../rnglib/name-pairs-api         \
+    -m name-pairs-local                 \
+    ringd/__init__.py                   \
+    ringd/chan_io.py                    \
+    ringd/daemon.py                     \
+    setup.py ring_daemon ring_client test*.py
