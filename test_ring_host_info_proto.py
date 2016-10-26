@@ -8,42 +8,42 @@ import unittest
 from io import StringIO
 
 from rnglib import SimpleRNG
-from ringd import *
-from ringHostInfoProto import RING_HOST_INFO_PROTO_SPEC
+from ringd import RING_HOST_INFO_PROTO
+from ring_host_info_proto import RING_HOST_INFO_PROTO_SPEC
 
 import fieldz.fieldTypes as F
-import fieldz.msgSpec as M
+import fieldz.msg_spec as M
 import fieldz.typed as T
-from pzog.xlattice.node import Node
+from xlattice.node import Node      # THIS WAS FROM pzog.xlattice...
 from fieldz.chan import Channel
 from fieldz.msgImpl import makeMsgClass, makeFieldClass
 
-rng = SimpleRNG(int(time.time()))
+RNG = SimpleRNG(int(time.time()))
 # XXX THIS WAS CAUSING A TEST FAILURE; FIXED By s/16/64/
 BUFSIZE = 64 * 1024
-hostByName = {}
-hostByAddr = {}
-hostByNodeID = {}
-hostByPubKey = {}
-hostByPrivateKey = {}
+HOST_BY_NAME = {}
+HOST_BY_ADDR = {}
+HOST_BY_NODE_ID = {}
+HOST_BY_PUB_KEY = {}
+HOST_BY_PRIVATE_KEY = {}
 
 
 class HostInfo(object):
-    __slots__ = ['_name', '_ipAddr', '_nodeID', '_pubKey',
-                 '_privateKey', ]
+    __slots__ = ['_name', '_ip_addr', '_node_id', '_pub_key',
+                 '_private_key', ]
 
-    def __init__(self, name=None, ipAddr=None, nodeID=None,
-                 pubKey=None, privateKey=None):
+    def __init__(self, name=None, ip_addr=None, node_id=None,
+                 pub_key=None, priv_key=None):
         self._name = name
-        self._ipAddr = ipAddr
-        self._nodeID = nodeID
-        self._pubKey = pubKey
-        self._privateKey = privateKey
+        self._ip_addr = ip_addr
+        self._node_id = node_id
+        self._pub_key = pub_key
+        self._private_key = priv_key
 
     @classmethod
-    def createRandomHost(cls):
-        name, dottedQ, nodeID, pubKey, privateKey = hostInfoValues()
-        return cls(name, dottedQ, nodeID, pubKey, privateKey)
+    def create_random_host(cls):
+        name, dotted_q, node_id, pub_key, priv_key = host_info_values()
+        return cls(name, dotted_q, node_id, pub_key, priv_key)
 
 
 class RingHostInfo(object):
@@ -53,20 +53,20 @@ class RingHostInfo(object):
         # DEBUG
         # END
         self._hosts = []
-        for h in hosts:
-            self._hosts.append(h)
+        for host in hosts:
+            self._hosts.append(host)
 
     @classmethod
-    def createRandomRing(cls):
-        ring = ringDataValues()
+    def create_random_ring(cls):
+        ring = ring_data_values()
         return cls(ring)
 
 
-def ringDataValues():
-    count = 2 + rng.nextInt16(4)    # so 2 to 5 hosts
+def ring_data_values():
+    count = 2 + RNG.next_int16(4)    # so 2 to 5 hosts
     ring = []
-    for n in range(count):
-        host = HostInfo.createRandomHost()
+    for _ in range(count):
+        host = HostInfo.create_random_host()
         ring.append(host)
     # DEBUG
     print("RING_HOST_INFO_VALUES returning a list of %u hosts" % len(ring))
@@ -74,26 +74,26 @@ def ringDataValues():
     return ring
 
 
-def hostInfoValues():
-    maxCount = 8
-    n = 0
-    while n < maxCount:
-        n = n + 1
+def host_info_values():
+    max_count = 8
+    nnn = 0
+    while nnn < max_count:
+        nnn = nnn + 1
         node = Node(True)    # uses SHA1; generates RSA keys by default
-        privateKey = node.key.exportKey()
-        pubKey = node.pubKey.exportKey()
-        hexNodeID = binascii.b2a_hex(node.nodeID)
+        priv_key = node.key.exportKey()
+        pub_key = node.pub_key.exportKey()
+        hex_node_id = binascii.b2a_hex(node.node_id)
 
 #       # DEBUG
-        print("nodeID is (%s) %s" % (type(node.nodeID), node.nodeID))
+        print("nodeID is (%s) %s" % (type(node.node_id), node.node_id))
 #       print "PRIVATE KEY: " + str(privateKey)
 #       print "PUBLIC KEY:  " + repr(pubKey)
 #       # END
 
-        name = rng.nextFileName(8)
+        name = RNG.next_file_name(8)
 
-        addr = rng.nextInt32()
-        dottedQ = '%d.%d.%d.%d' % (
+        addr = RNG.next_int32()
+        dotted_q = '%d.%d.%d.%d' % (
             (addr >> 24 & 0xff),
             (addr >> 16 & 0xff),
             (addr >> 8 & 0xff),
@@ -101,37 +101,37 @@ def hostInfoValues():
         # DEBUG
         print("name is      '%s'" % name)
         print("addr is      '%s'" % addr)
-        print("dottedQ is   '%s'" % dottedQ)
-        print("hexNodeID is '%s'\n" % hexNodeID)
+        print("dottedQ is   '%s'" % dotted_q)
+        print("hexNodeID is '%s'\n" % hex_node_id)
         # END
-        if name in hostByName:
+        if name in HOST_BY_NAME:
             continue
-        if dottedQ in hostByAddr:
+        if dotted_q in HOST_BY_ADDR:
             continue
-        if hexNodeID in hostByNodeID:       # hex value
+        if hex_node_id in HOST_BY_NODE_ID:       # hex value
             continue
         # DEBUG
         # print "PUB_KEY: %s" % pubKey.n
         # END
-        if pubKey in hostByPubKey:
+        if pub_key in HOST_BY_PUB_KEY:
             print("pubKey is not unique")
             continue
-        if privateKey in hostByPrivateKey:
+        if priv_key in HOST_BY_PRIVATE_KEY:
             print("privateKey is not unique")
             continue
 
         # we require that all of these fields be unique in the sample set
-        hostByName[name] = name      # dumb, but life is short
-        hostByAddr[dottedQ] = name
-        hostByNodeID[hexNodeID] = name
-        hostByPubKey[pubKey] = name
-        hostByPrivateKey[privateKey] = name
+        HOST_BY_NAME[name] = name      # dumb, but life is short
+        HOST_BY_ADDR[dotted_q] = name
+        HOST_BY_NODE_ID[hex_node_id] = name
+        HOST_BY_PUB_KEY[pub_key] = name
+        HOST_BY_PRIVATE_KEY[priv_key] = name
 
         # NOTE that nodeID is a binary value here
-        return (name, dottedQ, node.nodeID, pubKey, privateKey)  # GEEP
+        return (name, dotted_q, node.node_id, pub_key, priv_key)  # GEEP
 
 
-class TestRingHostInfoProto (unittest.TestCase):
+class TestRingHostInfoProto(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -141,160 +141,160 @@ class TestRingHostInfoProto (unittest.TestCase):
 
     # utility functions #############################################
 
-    def dumpBuffer(self, buf):
+    def dump_bufer(self, buf):
         for i in range(16):
             print("0x%02x " % buf[i], end=' ')
         print()
 
     # actual unit tests #############################################
-    def testRingHostInfoProto(self):
-        sOM = RING_HOST_INFO_PROTO
-        self.assertIsNotNone(sOM)
-        self.assertTrue(isinstance(sOM, M.ProtoSpec))
-        self.assertEquals('org.xlattice.pzog.ringHostInfo', sOM.name)
-        self.assertEquals(0, len(sOM.enums))
-        self.assertEquals(1, len(sOM.msgs))
-        self.assertEquals(0, len(sOM.seqs))
+    def test_ring_host_info_proto(self):
+        s_obj_model = RING_HOST_INFO_PROTO
+        self.assertIsNotNone(s_obj_model)
+        self.assertTrue(isinstance(s_obj_model, M.ProtoSpec))
+        self.assertEqual('org.xlattice.pzog.ringHostInfo', s_obj_model.name)
+        self.assertEqual(0, len(s_obj_model.enums))
+        self.assertEqual(1, len(s_obj_model.msgs))
+        self.assertEqual(0, len(s_obj_model.seqs))
 
         # OUTER MESSAGE SPEC ----------------------------------------
-        msgSpec = sOM.msgs[0]
-        field = msgSpec[0]
-        self.assertEquals(field.name, 'hosts')
-        self.assertEquals(field.fTypeName, 'hostInfo')
-        self.assertEquals(field.quantifier, M.Q_PLUS)
+        msg_spec = s_obj_model.msgs[0]
+        field = msg_spec[0]
+        self.assertEqual(field.name, 'hosts')
+        self.assertEqual(field.fTypeName, 'hostInfo')
+        self.assertEqual(field.quantifier, M.Q_PLUS)
 
         # INNER MESSAGE SPEC ----------------------------------------
-        msgSpec = sOM.msgs[0].msgs[0]
-        self.assertEquals(msgSpec.fName(0), 'hostName')
-        self.assertEquals(msgSpec.fTypeName(0), 'lString')
-        self.assertEquals(msgSpec.fName(1), 'ipAddr')
-        self.assertEquals(msgSpec.fTypeName(1), 'lString')
-        self.assertEquals(msgSpec.fName(2), 'nodeID')
-        self.assertEquals(msgSpec.fTypeName(2), 'fBytes20')
-        self.assertEquals(msgSpec.fName(3), 'pubKey')
-        self.assertEquals(msgSpec.fTypeName(3), 'lString')
-        self.assertEquals(msgSpec.fName(4), 'privateKey')
-        self.assertEquals(msgSpec.fTypeName(4), 'lString')
+        msg_spec = s_obj_model.msgs[0].msgs[0]
+        self.assertEqual(msg_spec.fName(0), 'hostName')
+        self.assertEqual(msg_spec.fTypeName(0), 'lString')
+        self.assertEqual(msg_spec.fName(1), 'ip_addr')
+        self.assertEqual(msg_spec.fTypeName(1), 'lString')
+        self.assertEqual(msg_spec.fName(2), 'node_id')
+        self.assertEqual(msg_spec.fTypeName(2), 'fBytes20')
+        self.assertEqual(msg_spec.fName(3), 'pub_key')
+        self.assertEqual(msg_spec.fTypeName(3), 'lString')
+        self.assertEqual(msg_spec.fName(4), 'priv_key')
+        self.assertEqual(msg_spec.fTypeName(4), 'lString')
         try:
-            msgSpec.fName(5)
+            msg_spec.fName(5)
             self.fail('did not catch reference to non-existent field')
-        except IndexError as ie:
+        except IndexError:
             pass                                                    # GEEP
 
     # ---------------------------------------------------------------
-    def testCaching(self):
+    def test_caching(self):
         """ verify that classes with the same definition are cached """
-        sOM = RING_HOST_INFO_PROTO
-        protoName = sOM.name
-        self.assertTrue(isinstance(sOM, M.ProtoSpec))
+        s_obj_model = RING_HOST_INFO_PROTO
+        proto_name = s_obj_model.name
+        self.assertTrue(isinstance(s_obj_model, M.ProtoSpec))
 
-        outerMsgSpec = sOM.msgs[0]
-        innerMsgSpec = sOM.msgs[0].msgs[0]
-        OuterMsg = makeMsgClass(sOM, outerMsgSpec.name)
+        outer_msg_spec = s_obj_model.msgs[0]
+        inner_msg_spec = s_obj_model.msgs[0].msgs[0]
+        OuterMsg = makeMsgClass(s_obj_model, outer_msg_spec.name)
         # NOTE change in parent
-        InnerMsg = makeMsgClass(outerMsgSpec, innerMsgSpec.name)
+        InnerMsg = makeMsgClass(outer_msg_spec, inner_msg_spec.name)
 
         # TEST INNER MESSAGE ########################################
-        Clz0 = makeMsgClass(outerMsgSpec, innerMsgSpec.name)
-        Clz1 = makeMsgClass(outerMsgSpec, innerMsgSpec.name)
+        Clz0 = makeMsgClass(outer_msg_spec, inner_msg_spec.name)
+        Clz1 = makeMsgClass(outer_msg_spec, inner_msg_spec.name)
         # we cache classes, so the two should be the same
-        self.assertEquals(id(Clz0), id(Clz1))
+        self.assertEqual(id(Clz0), id(Clz1))
 
         # test that msg instances created from the same value lists differ
-        values = hostInfoValues()
-        innerMsg0 = Clz0(values)
-        innerMsg1 = Clz0(values)
+        values = host_info_values()
+        inner_msg0 = Clz0(values)
+        inner_msg1 = Clz0(values)
         # we don't cache instances, so these will differ
-        self.assertNotEquals(id(innerMsg0), id(innerMsg1))
+        self.assertNotEqual(id(inner_msg0), id(inner_msg1))
 
         # verify that field classes are cached
-        fieldSpec = innerMsgSpec[0]
-        dottedName = '%s.%s' % (protoName, innerMsgSpec.name)
-        F0 = makeFieldClass(dottedName, fieldSpec)
-        F1 = makeFieldClass(dottedName, fieldSpec)
-        self.assertEquals(id(F0), id(F1))           # GEEP
+        field_spec = inner_msg_spec[0]
+        dotted_name = '%s.%s' % (proto_name, inner_msg_spec.name)
+        F0 = makeFieldClass(dotted_name, field_spec)
+        F1 = makeFieldClass(dotted_name, field_spec)
+        self.assertEqual(id(F0), id(F1))           # GEEP
 
         # TEST OUTER MESSAGE ########################################
-        Clz2 = makeMsgClass(sOM, outerMsgSpec.name)
-        Clz3 = makeMsgClass(sOM, outerMsgSpec.name)
+        Clz2 = makeMsgClass(s_obj_model, outer_msg_spec.name)
+        Clz3 = makeMsgClass(s_obj_model, outer_msg_spec.name)
         # we cache classe, so the two should be the same
-        self.assertEquals(id(Clz2), id(Clz3))
+        self.assertEqual(id(Clz2), id(Clz3))
 
         # test that msg instances created from the same value lists differ
-        ring = ringDataValues()  # a list of random hosts
+        ring = ring_data_values()  # a list of random hosts
 
-        # 'values' is a list of field values.  In this case, the single
+        # 'values_' is a list of field values.  In this case, the single
         # value is itself a list, a list of HostInfo value lists.
-        values = [ring]            # a list whose only member is a list
+        values_ = [ring]            # a list whose only member is a list
 
-        outerMsg0 = Clz2(values)
-        outerMsg1 = Clz2(values)
+        outer_msg0 = Clz2(values_)
+        outer_msg1 = Clz2(values_)
         # we don't cache instances, so these will differ
-        self.assertNotEquals(id(outerMsg0), id(outerMsg1))
+        self.assertNotEqual(id(outer_msg0), id(outer_msg1))
 
-        fieldSpec = outerMsgSpec[0]
-        dottedName = '%s.%s' % (protoName, outerMsgSpec.name)
-        F0 = makeFieldClass(dottedName, fieldSpec)
-        F1 = makeFieldClass(dottedName, fieldSpec)
-        self.assertEquals(id(F0), id(F1))           # GEEP
+        field_spec = outer_msg_spec[0]
+        dotted_name = '%s.%s' % (proto_name, outer_msg_spec.name)
+        F0 = makeFieldClass(dotted_name, field_spec)
+        F1 = makeFieldClass(dotted_name, field_spec)
+        self.assertEqual(id(F0), id(F1))           # GEEP
 
     # ---------------------------------------------------------------
     def testRingHostInfoProtoSerialization(self):
-        sOM = RING_HOST_INFO_PROTO
-        protoName = sOM.name
-        outerMsgSpec = sOM.msgs[0]
-        innerMsgSpec = sOM.msgs[0].msgs[0]
-        OuterMsg = makeMsgClass(sOM, outerMsgSpec.name)
+        s_obj_model = RING_HOST_INFO_PROTO
+        proto_name = s_obj_model.name
+        outer_msg_spec = s_obj_model.msgs[0]
+        inner_msg_spec = s_obj_model.msgs[0].msgs[0]
+        OuterMsg = makeMsgClass(s_obj_model, outer_msg_spec.name)
         # NOTE change in parent
-        InnerMsg = makeMsgClass(outerMsgSpec, innerMsgSpec.name)
+        InnerMsg = makeMsgClass(outer_msg_spec, inner_msg_spec.name)
 
         # Create a channel ------------------------------------------
         # its buffer will be used for both serializing # the instance
         # data and, by deserializing it, for creating a second instance.
         chan = Channel(BUFSIZE)
         buf = chan.buffer
-        self.assertEquals(BUFSIZE, len(buf))
+        self.assertEqual(BUFSIZE, len(buf))
 
         # create a message instance ---------------------------------
 
         # create some HostInfo instances
-        count = 2 + rng.nextInt16(7)  # so 2 .. 8
+        count = 2 + RNG.next_int16(7)  # so 2 .. 8
         ring = []
-        for n in range(count):
+        for nnn in range(count):
             # should avoid dupes
-            values = hostInfoValues()
+            values = host_info_values()
             ring.append(InnerMsg(values))
 
-        outerMsg = OuterMsg([ring])     # a list whose member is a list
+        outer_msg = OuterMsg([ring])     # a list whose member is a list
 
         # serialize the object to the channel -----------------------
-        n = outerMsg.writeStandAlone(chan)
-        oldPosition = chan.position
+        nnn = outer_msg.writeStandAlone(chan)
+        old_position = chan.position
         chan.flip()
 
-        self.assertEquals(oldPosition, chan.limit)
-        self.assertEquals(0, chan.position)
+        self.assertEqual(old_position, chan.limit)
+        self.assertEqual(0, chan.position)
 
         # deserialize the channel, making a clone of the message ----
-        (readBack, n2) = OuterMsg.read(chan, sOM)
-        self.assertIsNotNone(readBack)
+        (readback, nn2) = OuterMsg.read(chan, s_obj_model)
+        self.assertIsNotNone(readback)
 
         # verify that the messages are identical --------------------
-        self.assertTrue(outerMsg.__eq__(readBack))
-        self.assertEquals(n, n2)
+        self.assertTrue(outer_msg.__eq__(readback))
+        self.assertEqual(nnn, nn2)
 
         # produce another message from the same values --------------
         outerMsg2 = OuterMsg([ring])
         chan2 = Channel(BUFSIZE)
-        n = outerMsg2.writeStandAlone(chan2)
+        nnn = outerMsg2.writeStandAlone(chan2)
         chan2.flip()
-        (copy2, n3) = OuterMsg.read(chan2, sOM)
-        self.assertTrue(outerMsg.__eq__(copy2))
+        (copy2, nn3) = OuterMsg.read(chan2, s_obj_model)
+        self.assertTrue(outer_msg.__eq__(copy2))
         self.assertTrue(outerMsg2.__eq__(copy2))                   # GEEP
 
     # ---------------------------------------------------------------
-    # r = ringHost
-    def roundTripRingHostInfoInstanceToWireFormat(self, spec, r):
+    def round_trip_ring_host_info_instance_to_wire_format(
+            self, spec, ring_host):
 
         # invoke WireMsgSpecWriter
         # XXX STUB
@@ -304,17 +304,17 @@ class TestRingHostInfoProto (unittest.TestCase):
 
         pass
 
-    def testRoundTripRingHostInfoInstancesToWireFormat(self):
-        ringDataSpec = RING_HOST_INFO_PROTO
+    def test_round_trip_ring_host_info_instances_to_wire(self):
+        ring_data_spec = RING_HOST_INFO_PROTO
 
-        count = 3 + rng.nextInt16(6)   # so 3..8 inclusive
+        count = 3 + RNG.next_int16(6)   # so 3..8 inclusive
 
         # make that many semi-random nodes, taking care to avoid duplicates,
         # and round-trip each
-        for k in range(count):
-            r = HostInfo.createRandomHost()
-            self.roundTripRingHostInfoInstanceToWireFormat(
-                ringDataSpec, r)  # GEEP
+        for _ in range(count):
+            ring_host = HostInfo.create_random_host()
+            self.round_trip_ring_host_info_instance_to_wire_format(
+                ring_data_spec, ring_host)  # GEEP
 
 
 if __name__ == '__main__':

@@ -1,4 +1,6 @@
-pylint setup.py pzog    \
-    pzogd sprog         \
+pylint setup.py ring_daemon ring_client    \
+    ringd/chan_io.py    \
+    ringd/daemon.py     \
+    ringd/__init__.py   \
     test*.py
 

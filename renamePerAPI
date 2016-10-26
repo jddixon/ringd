@@ -1,0 +1,10 @@
+# pzog/renamePerAPI
+
+sdRenameInFiles -v1rw                   \
+    -m ../xlattice_py/name-pairs-api    \
+    -m ../nlhtree_py/name-pairs-api     \
+    -m ../buildlist/name-pairs-api      \
+    ringd/__init__.py                   \
+    ringd/chan_io.py                    \
+    ringd/daemon.py                     \
+    setup.py ring_daemon ring_client test*.py
