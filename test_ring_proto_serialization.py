@@ -3,16 +3,16 @@
 # testRingProtoSerialization.py
 import time
 import unittest
-from io import StringIO
+# from io import StringIO
 
 from rnglib import SimpleRNG
 
-from fieldz.parser import StringProtoSpecParser
-import fieldz.fieldTypes as F
+# from fieldz.parser import StringProtoSpecParser
+# import fieldz.fieldTypes as F
 import fieldz.msg_spec as M
-import fieldz.typed as T
+# import fieldz.typed as T
 from fieldz.chan import Channel
-from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
+from fieldz.msg_impl import make_msg_class, MsgImpl
 from ringd import RINGD_PROTO
 
 BUFSIZE = 16 * 1024
@@ -59,16 +59,16 @@ class TestRingProtoSerialization(unittest.TestCase):
         buf = chan.buffer
         self.assertEqual(BUFSIZE, len(buf))
 
-        # create the AckMsg class ------------------------------
+        # create the ack_msg_cls class ------------------------------
         ack_spec = self.s_obj_model.msgs[0]
         msg_name = ack_spec.name
         self.assertEqual('ack', msg_name)
 
-        AckMsg = makeMsgClass(self.s_obj_model, 'ack')
+        ack_msg_cls = make_msg_class(self.s_obj_model, 'ack')
 
         # create a message instance ---------------------------------
         values = [text]
-        ack = AckMsg(values)
+        ack = ack_msg_cls(values)
         (text1) = tuple(values)
 
         self.assertEqual(ack_spec.name, ack.name)
@@ -87,23 +87,23 @@ class TestRingProtoSerialization(unittest.TestCase):
         # serialize the object to the channel -----------------------
         buf = chan.buffer
         chan.clear()
-        nnn = ack.writeStandAlone(chan)
+        nnn = ack.write_stand_alone(chan)
         self.assertEqual(0, nnn)                         # returns msg index
         chan.flip()
 
         print("ACTUAL LENGTH OF SERIALIZED ACK OBJECT: %u" % chan.limit)
 
         # deserialize the channel, making a clone of the message ----
-        (readback, nn2) = MsgImpl.read(chan, self.s_obj_model)
+        (readback, _) = MsgImpl.read(chan, self.s_obj_model)
         self.assertIsNotNone(readback)
         self.assertTrue(ack.__eq__(readback))
 
         # produce another message from the same values --------------
-        ack2 = AckMsg(values)
+        ack2 = ack_msg_cls(values)
         chan2 = Channel(BUFSIZE)
-        nnn = ack2.writeStandAlone(chan2)
+        nnn = ack2.write_stand_alone(chan2)
         chan2.flip()
-        (copy2, nn3) = AckMsg.read(chan2, self.s_obj_model)
+        (copy2, nn3) = ack_msg_cls.read(chan2, self.s_obj_model)
         self.assertTrue(ack.__eq__(readback))
         self.assertTrue(ack2.__eq__(copy2))
         self.assertEqual(nnn, nn3)                # GEEP
@@ -153,7 +153,7 @@ class TestRingProtoSerialization(unittest.TestCase):
         self.assertEqual(BUFSIZE, len(buf))
 
         # create the LogEntryMsg class ------------------------------
-        LogEntryMsg = makeMsgClass(self.s_obj_model, 'logEntry')
+        LogEntryMsg = make_msg_class(self.s_obj_model, 'logEntry')
 
         # create a message instance ---------------------------------
         values = self.le_msg_values()        # a list of quasi-random values
@@ -188,7 +188,7 @@ class TestRingProtoSerialization(unittest.TestCase):
         # serialize the object to the channel -----------------------
         buf = chan.buffer
         chan.clear()
-        nnn = le_msg.writeStandAlone(chan)
+        nnn = le_msg.write_stand_alone(chan)
         self.assertEqual(5, nnn)                         # returns msg index
         old_position = chan.position                     # TESTING flip()
         chan.flip()
@@ -199,14 +199,14 @@ class TestRingProtoSerialization(unittest.TestCase):
         print("ACTUAL LENGTH OF SERIALIZED OBJECT: %u" % actual)
 
         # deserialize the channel, making a clone of the message ----
-        (readback, nn2) = MsgImpl.read(chan, self.s_obj_model)
+        (readback, _) = MsgImpl.read(chan, self.s_obj_model)
         self.assertIsNotNone(readback)
         self.assertTrue(le_msg.__eq__(readback))
 
         # produce another message from the same values --------------
         le_msg2 = LogEntryMsg(values)
         chan2 = Channel(BUFSIZE)
-        nnn = le_msg2.writeStandAlone(chan2)
+        nnn = le_msg2.write_stand_alone(chan2)
         chan2.flip()
         (copy2, nn3) = LogEntryMsg.read(chan2, self.s_obj_model)
         self.assertTrue(le_msg.__eq__(readback))

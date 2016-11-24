@@ -33,11 +33,7 @@ errorLog                    error_log
 expectedID                  expected_id
 
 fieldSpec                   field_spec
-
-
-
-
-
+fieldTypes                  field_types
 
 getIDAndPublicKeyForNode    get_id_and_public_key_for_node
 getRSAPublicKeyFromPrivate  get_rsa_public_key_from_private
@@ -48,7 +44,7 @@ hexNodeID                   hex_node_id
 hostInfoFile                host_info_file
 hostInfoValues              host_info_values
 
-id                          id_
+id_                         id
 inDir                       in_dir
 innerMsg                    inner_msg
 innerMsgSpec                inner_msg_spec
@@ -69,12 +65,16 @@ logMgr                      log_mgr
 logDir                      log_dir
 logEntryMsg                 log_entry_msg
 
+makeFieldClass              make_field_class
+makeMsgClass                make_msg_class
 maxCount                    max_count
+msgImpl                     msg_impl
 msgLen                      msg_len
 msgNbr                      msg_nbr
 msgName                     msg_name
 msgNdx                      msg_ndx
 msgSpec                     msg_spec
+mustExist                   must_exist
 
 n                           nnn
 n2                          nn2
@@ -127,6 +127,8 @@ uPathParts                  u_path_parts
 uServer                     u_server
 
 vBuf                        v_buf
+
+writeStandAlone             write_stand_alone
 
 
 doTestAck                   do_test_ack

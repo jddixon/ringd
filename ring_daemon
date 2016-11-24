@@ -8,9 +8,9 @@ import sys
 import time
 from argparse import ArgumentParser
 
-import u
-import upax
-from xlattice import (QQQ, check_using_sha,
+# import u
+# import upax
+from xlattice import (check_using_sha,
                       parseUsingSHA, fix_using_sha, show_using_sha, check_u_path)
 from ringd import(__version__, __version_date__, RINGD_APP_DIR,
                   RINGD_APP_NAME, RING_HOST_INFO_FILE, RINGD_PORT)
@@ -91,7 +91,7 @@ def main():
 
     # -- sanity checks ----------------------------------------------
     check_using_sha(args.using_sha)
-    check_u_path(parser, args, mustExist=True)
+    check_u_path(parser, args, must_exist=True)
     if not os.path.exists(args.app_dir):
         print("app directory '%s' does not exist" % args.app_dir)
         sys.exit(1)

@@ -3,14 +3,14 @@
 # ~/dev/py/ringd/ringClient
 
 import os
-import re
+# import re
 import sys
 import time
 from argparse import ArgumentParser
 
-import u
+#import u
 import upax
-from xlattice import (QQQ, check_using_sha,
+from xlattice import (check_using_sha,
                       parseUsingSHA, fix_using_sha, show_using_sha, check_u_path)
 
 from ringd import(__version__, __version_date__,

@@ -2,7 +2,7 @@
 
 import socket
 # import sys
-from fieldz.raw import LEN_PLUS_TYPE, readFieldHdr, readRawVarint
+from fieldz.raw import LEN_PLUS_TYPE, read_field_hdr, read_raw_varint
 # import fieldz.typed as T
 
 from ringd import BUFSIZE
@@ -34,7 +34,7 @@ def recv_from_cnx(cnx, chan):
         raise IOError('initial read of message gets zero bytes')
 
     # read the header to determine the message type and its length
-    (p_type, msg_nbr) = readFieldHdr(chan)
+    (p_type, msg_nbr) = read_field_hdr(chan)
     # DEBUG
     print("CHAN_IO: count = %d; pType = %s, msgNbr = %s" % (
         count, p_type, msg_nbr))
@@ -43,7 +43,7 @@ def recv_from_cnx(cnx, chan):
         raise IOError('message header type is %d, not LEN_PLUS_TYPE' % p_type)
     # XXX raise exception of msgNbr <0 or msgNbr > 2
 
-    msg_len = readRawVarint(chan)
+    msg_len = read_raw_varint(chan)
 
     # XXX ignoring pathological possibility that offset > count
 

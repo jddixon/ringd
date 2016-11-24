@@ -3,44 +3,51 @@
 __all__ = ['clear_logs', 'invoke_the_daemon',
            ]
 
-import os
 import socket
 import sys
-import time
-import u
+#import time
+from traceback import print_exc
+import os
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
+
+#import u
 import upax
 
-from traceback import print_exc
+from xlattice import check_using_sha
+from xlattice.ft_log import LogMgr
+from xlattice.proc_lock import ProcLock
 
-from xlattice import QQQ, check_using_sha
-from xlattice.ftLog import LogMgr
-from xlattice.procLock import ProcLock
-
-import fieldz.fieldTypes as F
-import fieldz.msg_spec as M
-import fieldz.typed as T
+# import fieldz.field_types as F
+# import fieldz.msg_spec as M
+# import fieldz.typed as T
 
 from ringd import BUFSIZE
 from ringd.chan_io import recv_from_cnx
 
-from fieldz.chan import Channel
-from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
+from fieldz.chan_io import Channel
+from fieldz.msg_impl import MsgImpl
 
 # DAEMON ------------------------------------------------------------
 
 
 def clear_logs(options):
+    """ Delete any simple files found in the log directory. """
     log_dir = options.log_dir
-    print("DEBUG: clearLogs, log_dir = '%s'" % log_dir)
+    print(("DEBUG: clearLogs, log_dir = '%s'" % log_dir))
     if os.path.exists(log_dir):
         if log_dir.startswith('/') or log_dir.startswith('..'):
             raise RuntimeError("cannot delete %s/*" % log_dir)
-        files = os.listdir(log_dir)
-        if files:
-            if options.verbose:
-                print("found %u files" % len(files))
-            for file in files:
-                os.unlink(os.path.join(log_dir, file))
+        count = 0
+        for entry in scandir(log_dir):
+            if entry.is_file():
+                os.unlink(entry.path)
+                count += 1
+
+    if options.verbose:
+        print("found %u files" % count)
 
 
 def actually_run_the_daemon(options):
@@ -79,8 +86,8 @@ def actually_run_the_daemon(options):
                     # XXX s_obj_model (the former sOM) is UNDEFINIED here
                     (msg, real_ndx) = MsgImpl.read(chan, s_obj_model)
                     # DEBUG
-                    print "  MSG_NDX: CALCULATED %s, REAL %s" % (
-                        msgNdx, realNdx)
+                    print("  MSG_NDX: CALCULATED %s, REAL %s" % (
+                        msg_ndx, real_ndx))
                     # END
                     # switch on message type
                     if msg_ndx == 0:
@@ -89,7 +96,7 @@ def actually_run_the_daemon(options):
                         print("    seqNbr         %s" % msg.seqNbr)
                         print("    zoneName       %s" % msg.zoneName)
                         print("    expectedSerial %s" % msg.expectedSerial)
-                        print("    actualSerial   %s" % msg.actualSerial)
+                        print("    /Serial   %s" % msg.actualSerial)
                         text =\
                             "mismatch, domain %s: expected serial %s, got %s" % (
                                 msg.zoneName, msg.expectedSerial, msg.actualSerial)
@@ -234,7 +241,7 @@ def invoke_the_daemon(options):
     if options.verbose or options.show_version or options.just_show:
         print(options.pgm_name_and_version)
     if options.show_timestamp:
-        print('run at %s GMT' % timestamp)   # could be prettier
+        print(('run at %s GMT' % options.timestamp))   # could be prettier
     else:
         print()                               # there's a comma up there
 
