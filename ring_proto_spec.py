@@ -10,31 +10,31 @@ protocol org.xlattice.ringd
 # ===================================================================
 
 message     ack
- text       lString?
+ text       lstring?
 
 message     bye
- text       lString?
+ text       lstring?
 
 message     error
- code       vuInt32
- text       lString?
+ code       vuint32
+ text       lstring?
 
 message     hello
- dunno      lString?
+ dunno      lstring?
 
 message     keepAlive
- text       lString?
+ text       lstring?
 
 message     logEntry
- timestamp  fuInt32         # 0: seconds from epoch
- key        fBytes20        # 1: content key
- length     vuInt32         # 2: number of bytes in content
- nodeID     fBytes20        # 3: nodeID of ring host accepting content
- src        lString         # 4: arbitrary contents; ASCII or unicode
- path       lString         # 5: POSIX path using / as separator
+ timestamp  fuint32         # 0: seconds from epoch
+ key        fbytes20        # 1: content key
+ length     vuint32         # 2: number of bytes in content
+ nodeID     fbytes20        # 3: nodeID of ring host accepting content
+ src        lstring         # 4: arbitrary contents; ASCII or unicode
+ path       lstring         # 5: POSIX path using / as separator
 
 message     ok
- text       lString?
+ text       lstring?
 
 # ===================================================================
 # DO NOT USE MESSAGE TYPES BELOW THIS LINE
@@ -44,18 +44,18 @@ message     ok
 # ===================================================================
 
 message     ihave
- key        fBytes20
- length     vuInt32         # allows you to allocate an appropriate buffer
+ key        fbytes20
+ length     vuint32         # allows you to allocate an appropriate buffer
 
 message     get
- key        fBytes20
+ key        fbytes20
 
 message     put
- key        fBytes20
+ key        fbytes20
  content    lBytes          # length is embedded in the lBytes
 
 message     unknown
- key        fBytes20
+ key        fbytes20
 
 # ===================================================================
 # These define what constitutes an acceptable ring message sequence.

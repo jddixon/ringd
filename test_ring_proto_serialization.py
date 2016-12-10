@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-
 # testRingProtoSerialization.py
+
+""" Test the protocol used for communications around the ring. """
+
 import time
 import unittest
-from io import StringIO
+# from io import StringIO
 
 from rnglib import SimpleRNG
 
-from fieldz.parser import StringProtoSpecParser
-import fieldz.fieldTypes as F
+# from fieldz.parser import StringProtoSpecParser
+# import fieldz.fieldTypes as F
 import fieldz.msg_spec as M
-import fieldz.typed as T
+# import fieldz.typed as T
 from fieldz.chan import Channel
-from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
+from fieldz.msg_impl import make_msg_class, MsgImpl
 from ringd import RINGD_PROTO
 
 BUFSIZE = 16 * 1024
@@ -22,6 +24,7 @@ RNG = SimpleRNG(time.time())
 
 
 class TestRingProtoSerialization(unittest.TestCase):
+    """ Test the protocol used for communications around the ring. """
 
     def setUp(self):
         self.s_obj_model = RINGD_PROTO
@@ -59,51 +62,56 @@ class TestRingProtoSerialization(unittest.TestCase):
         buf = chan.buffer
         self.assertEqual(BUFSIZE, len(buf))
 
-        # create the AckMsg class ------------------------------
+        # create the ack_msg_cls class ------------------------------
         ack_spec = self.s_obj_model.msgs[0]
         msg_name = ack_spec.name
         self.assertEqual('ack', msg_name)
 
-        AckMsg = makeMsgClass(self.s_obj_model, 'ack')
+        ack_msg_cls = make_msg_class(self.s_obj_model, 'ack')
 
         # create a message instance ---------------------------------
         values = [text]
-        ack = AckMsg(values)
-        (text1) = tuple(values)
+        ack = ack_msg_cls(values)
+        (_) = tuple(values)             # WAS text1
 
+        # pylint: disable=no-member
         self.assertEqual(ack_spec.name, ack.name)
         # we don't have any nested enums or messages
+        # pylint: disable=no-member
         self.assertEqual(0, len(ack.enums))
+        # pylint: disable=no-member
         self.assertEqual(0, len(ack.msgs))
 
+        # pylint: disable=no-member
         self.assertEqual(1, len(ack.fieldClasses))
         self.assertEqual(1, len(ack))        # number of fields in instance
-        for i in range(len(ack)):
-            self.assertEqual(values[i], ack[i].value)
+        for ndx, value in enumerate(ack):
+            self.assertEqual(values[ndx], value)
 
         # verify fields are accessible in the object ----------------
+        # pylint: disable=no-member
         self.assertEqual(text, ack.text)
 
         # serialize the object to the channel -----------------------
         buf = chan.buffer
         chan.clear()
-        nnn = ack.writeStandAlone(chan)
+        nnn = ack.write_stand_alone(chan)
         self.assertEqual(0, nnn)                         # returns msg index
         chan.flip()
 
         print("ACTUAL LENGTH OF SERIALIZED ACK OBJECT: %u" % chan.limit)
 
         # deserialize the channel, making a clone of the message ----
-        (readback, nn2) = MsgImpl.read(chan, self.s_obj_model)
+        (readback, _) = MsgImpl.read(chan, self.s_obj_model)
         self.assertIsNotNone(readback)
         self.assertTrue(ack.__eq__(readback))
 
         # produce another message from the same values --------------
-        ack2 = AckMsg(values)
+        ack2 = ack_msg_cls(values)
         chan2 = Channel(BUFSIZE)
-        nnn = ack2.writeStandAlone(chan2)
+        nnn = ack2.write_stand_alone(chan2)
         chan2.flip()
-        (copy2, nn3) = AckMsg.read(chan2, self.s_obj_model)
+        (copy2, nn3) = ack_msg_cls.read(chan2, self.s_obj_model)
         self.assertTrue(ack.__eq__(readback))
         self.assertTrue(ack2.__eq__(copy2))
         self.assertEqual(nnn, nn3)                # GEEP
@@ -153,11 +161,11 @@ class TestRingProtoSerialization(unittest.TestCase):
         self.assertEqual(BUFSIZE, len(buf))
 
         # create the LogEntryMsg class ------------------------------
-        LogEntryMsg = makeMsgClass(self.s_obj_model, 'logEntry')
+        log_entry_msg = make_msg_class(self.s_obj_model, 'logEntry')
 
         # create a message instance ---------------------------------
         values = self.le_msg_values()        # a list of quasi-random values
-        le_msg = LogEntryMsg(values)
+        le_msg = log_entry_msg(values)
         (timestamp, key, length, node_id, src, path) = tuple(values)
 
         # DEBUG
@@ -166,29 +174,36 @@ class TestRingProtoSerialization(unittest.TestCase):
         print("LENGTH    = %s" % length)
         # END
 
+        # pylint: disable=no-member
         self.assertEqual(le_msg_spec.name, le_msg.name)
         # we don't have any nested enums or messages
         self.assertEqual(0, len(le_msg.enums))
         self.assertEqual(0, len(le_msg.msgs))
 
+        # pylint: disable=no-member
         self.assertEqual(6, len(le_msg.fieldClasses))
         self.assertEqual(6, len(le_msg))        # number of fields in instance
-        for i in range(len(le_msg)):
-            self.assertEqual(values[i], le_msg[i].value)
+        for ndx, value in enumerate(le_msg):
+            self.assertEqual(value, values[ndx])
 
         # verify fields are accessible in the object ----------------
         #(timestamp, key, length, nodeID, src, path) = tuple(values)
         self.assertEqual(timestamp, le_msg.timestamp)
+        # pylint: disable=no-member
         self.assertEqual(key, le_msg.key)
+        # pylint: disable=no-member
         self.assertEqual(length, le_msg.length)
+        # pylint: disable=no-member
         self.assertEqual(node_id, le_msg.node_id)
+        # pylint: disable=no-member
         self.assertEqual(src, le_msg.src)
+        # pylint: disable=no-member
         self.assertEqual(path, le_msg.path)
 
         # serialize the object to the channel -----------------------
         buf = chan.buffer
         chan.clear()
-        nnn = le_msg.writeStandAlone(chan)
+        nnn = le_msg.write_stand_alone(chan)
         self.assertEqual(5, nnn)                         # returns msg index
         old_position = chan.position                     # TESTING flip()
         chan.flip()
@@ -199,16 +214,16 @@ class TestRingProtoSerialization(unittest.TestCase):
         print("ACTUAL LENGTH OF SERIALIZED OBJECT: %u" % actual)
 
         # deserialize the channel, making a clone of the message ----
-        (readback, nn2) = MsgImpl.read(chan, self.s_obj_model)
+        (readback, _) = MsgImpl.read(chan, self.s_obj_model)
         self.assertIsNotNone(readback)
         self.assertTrue(le_msg.__eq__(readback))
 
         # produce another message from the same values --------------
-        le_msg2 = LogEntryMsg(values)
+        le_msg2 = log_entry_msg(values)
         chan2 = Channel(BUFSIZE)
-        nnn = le_msg2.writeStandAlone(chan2)
+        nnn = le_msg2.write_stand_alone(chan2)
         chan2.flip()
-        (copy2, nn3) = LogEntryMsg.read(chan2, self.s_obj_model)
+        (copy2, nn3) = log_entry_msg.read(chan2, self.s_obj_model)
         self.assertTrue(le_msg.__eq__(readback))
         self.assertTrue(le_msg2.__eq__(copy2))
         self.assertEqual(nnn, nn3)                # GEEP

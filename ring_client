@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-
 # ~/dev/py/ringd/ringClient
 
+""" Collect options for the ringd client and invoke it. """
+
 import os
-import re
+# import re
 import sys
 import time
 from argparse import ArgumentParser
 
-import u
-import upax
-from xlattice import (QQQ, check_using_sha,
-                      parseUsingSHA, fix_using_sha, show_using_sha, check_u_path)
+from optionz import dump_options
+#import upax
+from xlattice import (check_using_sha,
+                      parseUsingSHA, fix_using_sha)
 
 from ringd import(__version__, __version_date__,
                   RINGD_APP_DIR, RINGD_APP_NAME, RING_HOST_INFO_FILE,
@@ -22,9 +23,11 @@ from ringd import(__version__, __version_date__,
 
 def invoke_the_client(options):
     """ XXX STUB """
+    _ = options
 
 
 def main():
+    """ Collect options for the ringd client. """
 
     timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
@@ -115,10 +118,7 @@ def main():
     args.u_dir = os.path.join(args.config_dir, args.u_dir)
 
     if args.just_show or args.verbose:
-
-        # XXX STUB
-
-        show_using_sha(args)
+        print(dump_options(args))
 
     # -- do it ------------------------------------------------------
     if not args.just_show:

@@ -1,46 +1,56 @@
 # ~/dev/py/ringd/ringd/daemon.py
 
-__all__ = ['clear_logs', 'invoke_the_daemon',
-           ]
+"""
+Code for the ringd server, which should be a daemon.
+"""
 
-import os
+__all__ = ['clear_logs', 'invoke_the_daemon', 'actually_run_the_daemon']
+
 import socket
 import sys
-import time
-import u
+#import time
+from traceback import print_exc
+import os
+try:
+    from os import scandir
+except ImportError:
+    from scandir import scandir
+
 import upax
 
-from traceback import print_exc
+from optionz import dump_options
+from xlattice import check_using_sha
+from xlattice.ftlog import LogMgr
+from xlattice.proc_lock import ProcLock
 
-from xlattice import QQQ, check_using_sha
-from xlattice.ftLog import LogMgr
-from xlattice.procLock import ProcLock
-
-import fieldz.fieldTypes as F
-import fieldz.msg_spec as M
-import fieldz.typed as T
+# import fieldz.field_types as F
+# import fieldz.msg_spec as M
+# import fieldz.typed as T
 
 from ringd import BUFSIZE
 from ringd.chan_io import recv_from_cnx
 
 from fieldz.chan import Channel
-from fieldz.msgImpl import makeMsgClass, makeFieldClass, MsgImpl
+from fieldz.msg_impl import MsgImpl
 
 # DAEMON ------------------------------------------------------------
 
 
 def clear_logs(options):
+    """ Delete any simple files found in the log directory. """
     log_dir = options.log_dir
-    print("DEBUG: clearLogs, log_dir = '%s'" % log_dir)
+    print(("DEBUG: clearLogs, log_dir = '%s'" % log_dir))
     if os.path.exists(log_dir):
         if log_dir.startswith('/') or log_dir.startswith('..'):
             raise RuntimeError("cannot delete %s/*" % log_dir)
-        files = os.listdir(log_dir)
-        if files:
-            if options.verbose:
-                print("found %u files" % len(files))
-            for file in files:
-                os.unlink(os.path.join(log_dir, file))
+        count = 0
+        for entry in scandir(log_dir):
+            if entry.is_file():
+                os.unlink(entry.path)
+                count += 1
+
+    if options.verbose:
+        print("found %u files" % count)
 
 
 def actually_run_the_daemon(options):
@@ -79,37 +89,49 @@ def actually_run_the_daemon(options):
                     # XXX s_obj_model (the former sOM) is UNDEFINIED here
                     (msg, real_ndx) = MsgImpl.read(chan, s_obj_model)
                     # DEBUG
-                    print "  MSG_NDX: CALCULATED %s, REAL %s" % (
-                        msgNdx, realNdx)
+                    print("  MSG_NDX: CALCULATED %s, REAL %s" % (
+                        msg_ndx, real_ndx))
                     # END
                     # switch on message type
                     if msg_ndx == 0:
                         print("GOT ZONE MISMATCH MSG")
-                        print("    timestamp      %s" % msg.timestamp)
-                        print("    seqNbr         %s" % msg.seqNbr)
-                        print("    zoneName       %s" % msg.zoneName)
-                        print("    expectedSerial %s" % msg.expectedSerial)
-                        print("    actualSerial   %s" % msg.actualSerial)
-                        text =\
+                        # pylint: disable=no-member
+                        print("    timestamp       %s" % msg.timestamp)
+                        # pylint: disable=no-member
+                        print("    seq_nbr         %s" % msg.seq_nbr)
+                        # pylint: disable=no-member
+                        print("    zone_name       %s" % msg.zone_name)
+                        # pylint: disable=no-member
+                        print("    expected_serial %s" % msg.expected_serial)
+                        # pylint: disable=no-member
+                        print("    /Serial   %s" % msg.actual_serial)
+                        # pylint: disable=no-member
+                        text = \
                             "mismatch, domain %s: expected serial %s, got %s" % (
-                                msg.zoneName, msg.expectedSerial, msg.actualSerial)
+                                msg.zone_name, msg.expected_serial,
+                                msg.actual_serial)
                         options.alertz_log.log(text)
 
                     elif msg_ndx == 1:
-                        # timestamp, seqNb
+                        # timestamp, seq_nbr
                         print("GOT CORRUPT LIST MSG")
+                        # pylint: disable=no-member
                         print("    timestamp      %s" % msg.timestamp)
-                        print("    seqNbr         %s" % msg.seqNbr)
-                        text = "corrupt list: %s" % (msg.seqNbr)
+                        # pylint: disable=no-member
+                        print("    seq_nbr         %s" % msg.seq_nbr)
+                        # pylint: disable=no-member
+                        text = "corrupt list: %s" % (msg.seq_nbr)
                         options.alertz_log.log(text)
 
                     elif msg_ndx == 2:
                         # has one field, remarks
                         print("GOT SHUTDOWN MSG")
+                        # pylint: disable=no-member
                         print("    remarks        %s" % msg.remarks)
                         running = False
                         skt.close()
                         # XXX STUB: log the message
+                        # pylint: disable=no-member
                         text = "shutdown: %s" % (msg.remarks)
                         options.alertz_log.log(text)
 
@@ -162,9 +184,6 @@ def setup_the_app(options):
         options.error_log = error_log
 
         actually_run_the_daemon(options)
-    except:
-        print_exc()
-        sys.exit(1)
     finally:
         if log_mgr is not None:
             log_mgr.close()
@@ -234,24 +253,12 @@ def invoke_the_daemon(options):
     if options.verbose or options.show_version or options.just_show:
         print(options.pgm_name_and_version)
     if options.show_timestamp:
-        print('run at %s GMT' % timestamp)   # could be prettier
+        print(('run at %s GMT' % options.timestamp))   # could be prettier
     else:
         print()                               # there's a comma up there
 
     if options.just_show or options.verbose:
-        print('config_dir       = ' + str(options.config_dir))
-        print('just_show        = ' + str(options.just_show))
-        print('log_dir          = ' + str(options.log_dir))
-        print('no_changes       = ' + str(options.no_changes))
-        print('path_to_host_info= ' + str(options.path_to_host_info))
-        print('port             = ' + str(options.port))
-        print('show_timestamp   = ' + str(options.show_timestamp))
-        print('show_version     = ' + str(options.show_version))
-        print('testing          = ' + str(options.testing))
-        print('timestamp        = ' + str(options.timestamp))
-        print('using_sha        = ' + str(options.using_sha))
-        print('u_path           = ' + str(options.u_path))
-        print('verbose          = ' + str(options.verbose))
+        print(dump_options(options))
 
     lock_mgr = None
     log_mgr = None
@@ -261,9 +268,6 @@ def invoke_the_daemon(options):
             log_mgr = LogMgr(options.log_dir)
             options.log_mgr = log_mgr
             setup_u_server(options)
-        except:
-            print_exc()
-            sys.exit(1)
         finally:
             if log_mgr is not None:
                 log_mgr.close()
