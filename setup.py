@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-
 # ~/dev/py/ringd/setup.py
+
+""" Set up distutils for ringd. """
 
 import re
 from distutils.core import setup
@@ -19,8 +20,7 @@ setup(name='ringd',
       py_modules=[],
       #
       # a package has its own directory with an __init__.py in it
-      packages=['ringd',
-                ],
+      packages=['ringd', ],
       #
       # scripts should have a globally unique name; they might be in a
       #   scripts/ subdir; SQuote the script name

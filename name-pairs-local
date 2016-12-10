@@ -13,6 +13,8 @@ blockSize                   blockSize
 
 checkNode                   check_node
 clearLogs                   clear_logs
+Clz0                        cls0
+Clz1                        cls1
 configDir                   config_dir
 createFromKey               create_from_key
 createPrivateKey            create_private_key
@@ -32,6 +34,8 @@ errorLog                    error_log
 
 expectedID                  expected_id
 
+F0                          f0cls
+F1                          f1cls
 fieldSpec                   field_spec
 fieldTypes                  field_types
 
@@ -46,6 +50,7 @@ hostInfoValues              host_info_values
 
 id_                         id
 inDir                       in_dir
+InnerMsg                    inner_msg
 innerMsg                    inner_msg
 innerMsgSpec                inner_msg_spec
 innerMsg0                   inner_msg0
@@ -64,6 +69,7 @@ lockMgr                     lock_mgr
 logMgr                      log_mgr
 logDir                      log_dir
 logEntryMsg                 log_entry_msg
+LogEntryMsg                 log_entry_msg
 
 makeFieldClass              make_field_class
 makeMsgClass                make_msg_class
@@ -84,6 +90,7 @@ _nodeID                     _node_id
 nodeID                      node_id
 
 oldPosition                 old_position
+OuterMsg                    outer_msg
 outerMsg                    outer_msg
 outerMsg0                   outer_msg0
 outerMsg1                   outer_msg1

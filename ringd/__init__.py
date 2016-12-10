@@ -1,5 +1,7 @@
 # ringd/__init__.py
 
+""" Initilize the ringd package. """
+
 import os
 from io import StringIO
 from ring_host_info_proto import RING_HOST_INFO_PROTO_SPEC
@@ -16,8 +18,8 @@ __all__ = ['__version__', '__version_date__', 'BUFSIZE',
            ]
 
 # - exported constants ----------------------------------------------
-__version__ = '0.3.5'
-__version_date__ = '2016-11-24'
+__version__ = '0.3.6'
+__version_date__ = '2016-12-09'
 BUFSIZE = 64 * 1024   # must be big enough for all using protocols
 
 # -------------------------------------------------------------------

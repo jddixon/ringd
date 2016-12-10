@@ -1,6 +1,7 @@
 #!/usr/bin/python3
+# ~/dev/py/ringd/ring_daemon
 
-# ~/dev/py/ringd/ringDaemon
+""" Daemon component of the ringd package. """
 
 import os
 #import re
@@ -8,19 +9,21 @@ import sys
 import time
 from argparse import ArgumentParser
 
-# import u
+from optionz import dump_options
 # import upax
 from xlattice import (check_using_sha,
-                      parseUsingSHA, fix_using_sha, show_using_sha, check_u_path)
+                      parseUsingSHA, fix_using_sha, check_u_path)
 from ringd import(__version__, __version_date__, RINGD_APP_DIR,
                   RINGD_APP_NAME, RING_HOST_INFO_FILE, RINGD_PORT)
 
 
 def invoke_the_daemon(options):
     """ XXX STUB XXX """
+    _ = options
 
 
 def main():
+    """ Set up options for the ring daemon. """
 
     timestamp = "%04d%02d%02d-%02d%02d%02d" % time.gmtime()[:6]
 
@@ -113,8 +116,7 @@ def main():
     check_u_path(parser, args)        # create uDir if it doesn't exist
 
     if args.just_show or args.verbose:
-        # XXX STUB XXX
-        show_using_sha(args)
+        print(dump_options(args))
 
     # -- do it ------------------------------------------------------
     if not args.just_show:

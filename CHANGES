@@ -1,5 +1,8 @@
 ~/dev/py/ringd/CHANGES
 
+v0.3.6
+    2016-12-09
+        * PEP 8 pylinting                                           SLOC 1544
 v0.3.5
     2016-11-24
         * replace listdir with scandir; a little PEP 8              SLOC 1676
@@ -53,6 +56,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 

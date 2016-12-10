@@ -1,5 +1,7 @@
 # ~/dev/py/ringd/ringd/chanIO.py
 
+""" Communicatiosn for ringd components. """
+
 import socket
 # import sys
 from fieldz.raw import LEN_PLUS_TYPE, read_field_hdr, read_raw_varint
@@ -62,7 +64,8 @@ def send_on_cnx(chan, cnx):
     Suitable for use by servers sending replies or clients continuing a
     conversation.
     """
-    pass        # XXX STUB
+    _, _ = chan, cnx
+    # XXX STUB
 
 
 def send_to_endpoint(chan, host, port):
