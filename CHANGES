@@ -1,5 +1,10 @@
 ~/dev/py/ringd/CHANGES
 
+
+v0.3.7
+    2017-01-16
+        * drop redundant utilities                                  SLOC 1596
+        * changes to suit new xlattice_py API                       SLOC 1597
 v0.3.6
     2016-12-09
         * PEP 8 pylinting                                           SLOC 1544
@@ -56,6 +61,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 

@@ -11,8 +11,8 @@ from argparse import ArgumentParser
 
 from optionz import dump_options
 # import upax
-from xlattice import (check_using_sha,
-                      parseUsingSHA, fix_using_sha, check_u_path)
+from xlattice import (HashTypes, check_hashtype,
+                      parse_hashtype_etc, fix_hashtype, check_u_path)
 from ringd import(__version__, __version_date__, RINGD_APP_DIR,
                   RINGD_APP_NAME, RING_HOST_INFO_FILE, RINGD_PORT)
 
@@ -72,12 +72,12 @@ def main():
     parser.add_argument('-z', '--no_changes', action='store_true',
                         help="don't actually write anything to disk")
 
-    parseUsingSHA(parser)
+    parse_hashtype_etc(parser)
 
     args = parser.parse_args()      # a Namespace object
 
     # -- fixups -----------------------------------------------------
-    fix_using_sha(args)
+    fix_hashtype(args)
 
     args.pgm_name_and_version = "%s v%s %s" % (args.app_name,
                                                __version__, __version_date__)
@@ -93,7 +93,7 @@ def main():
     args.timestamp = timestamp
 
     # -- sanity checks ----------------------------------------------
-    check_using_sha(args.using_sha)
+    check_hashtype(args.hashtype)
     check_u_path(parser, args, must_exist=True)
     if not os.path.exists(args.app_dir):
         print("app directory '%s' does not exist" % args.app_dir)
