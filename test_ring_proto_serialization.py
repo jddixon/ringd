@@ -13,9 +13,9 @@ from rnglib import SimpleRNG
 # import fieldz.fieldTypes as F
 import fieldz.msg_spec as M
 # import fieldz.typed as T
-from fieldz.chan import Channel
 from fieldz.msg_impl import make_msg_class, MsgImpl
 from ringd import RINGD_PROTO
+from wireops.chan import Channel
 
 BUFSIZE = 16 * 1024
 RNG = SimpleRNG(time.time())

@@ -19,7 +19,7 @@ except ImportError:
 import upax
 
 from optionz import dump_options
-from xlattice import check_using_sha
+from xlattice import HashTypes, check_hashtype
 from xlattice.ftlog import LogMgr
 from xlattice.proc_lock import ProcLock
 
@@ -30,8 +30,9 @@ from xlattice.proc_lock import ProcLock
 from ringd import BUFSIZE
 from ringd.chan_io import recv_from_cnx
 
-from fieldz.chan import Channel
 from fieldz.msg_impl import MsgImpl
+
+from wireops.chan import Channel
 
 # DAEMON ------------------------------------------------------------
 
@@ -198,11 +199,11 @@ def setup_u_server(options):
     """
     no_changes = options.no_changes
     u_path = options.u_path
-    using_sha = not options.using_sha3
+    hashtype = not options.hashtype3
     verbose = options.verbose
 
-    check_using_sha(using_sha)
-    u_server = upax.BlockingServer(u_path, using_sha)
+    check_hashtype(hashtype)
+    u_server = upax.BlockingServer(u_path, hashtype)
     options.u_server = u_server
     u_log = u_server.log
     options.u_log = u_log
@@ -220,11 +221,11 @@ def setup_u_server(options):
 #   files = os.listdir(args.inDir)
 #   for file in files:
 #       pathToFile  = os.path.join(args.inDir, file)
-#       if using_sha == Q.USING_SHA1:
+#       if hashtype == HashTypes.SHA1:
 #           hash        = u.fileSHA1(pathToFile)
-#       elif using_sha == Q.USING_SHA2:
+#       elif hashtype == HashTypes.SHA2:
 #           hash        = u.fileSHA2(pathToFile)
-#       elif using_sha == Q.USING_SHA3:
+#       elif hashtype == HashTypes.SHA3:
 #           hash        = u.fileSHA3(pathToFile)
 #       if no_changes:
 #           if verbose:     print 'would add %s %s' % (hash, pathToFile)
