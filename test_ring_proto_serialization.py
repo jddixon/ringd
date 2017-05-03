@@ -228,5 +228,6 @@ class TestRingProtoSerialization(unittest.TestCase):
         self.assertTrue(le_msg2.__eq__(copy2))
         self.assertEqual(nnn, nn3)                # GEEP
 
+
 if __name__ == '__main__':
     unittest.main()

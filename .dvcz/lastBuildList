@@ -7,20 +7,20 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-ringd v0.3.7
-2017-01-17 02:07:56
+ringd v0.3.8
+2017-05-03 23:25:37
 # BEGIN CONTENT #
 ringd
  .dvcz
-  builds 08d703538b0a3a182cfe459edbf357c6187923ae
-  copyright 40a152c0598a7da436fc48b2286fb14b4f2e9101
-  lastBuildList cc80902fbe75d5b0f95f8b9dc41bcd46ee7c8f44
+  builds 4610fa8b5fc2611e2f7deed21b4dc4556a2085dd
+  copyright 081f1eacc7bee6ce9cf06ffc957c1472faf9c994
+  lastBuildList 48d42048efa5eb0d5ced4e077fd2aeaa60c66a90
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 582426a9b589e3c3998b6e2992cc6c788548a981
   projCfg.local 3f560c74c19ba5fa5284d396ee6e0befb1a2bae0
-  version 9ca75ddbec7026d8f65361fa2611fdf56d8bfbbd
- .gitignore b2cc5fa149056ba0a01449dcdb19409728483a5c
- CHANGES 47c11f925b2db9303db4bc977553278ecea8a6c1
+  version 77418ed205c222cea770f7606c46ca25d764ff54
+ .gitignore 5185a3cb0539828e50edfc25d60c80ae291197fa
+ CHANGES 72eed489cb66ef748866fb65ba7d9c8d292b886e
  LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 40a229dcafefdaad08383d1659b025ef06bb53af
  README 6df713adf5e9b96b4aba784bda89316512895c78
@@ -29,24 +29,6 @@ ringd
  bkp2U 79deb36b41b8b2a0fa56a8d50c10d761ed5442d5
  checkCoverage 7fa4b53c7e805fd28ba5392180d9af793f206067
  countem 19532d117f845cb134e0120eea1ed63a197ec739
- dist
-  ringd-0.1.0.tar.gz 2280f9ddfe3c257d828de16b3d27d7c7161ea125
-  ringd-0.2.0.tar.gz fc067d25b99a3088b358adf6eed45664f6161f24
-  ringd-0.2.1.tar.gz fe1a15f3eb719b67f891033ad0fb0cf411331817
-  ringd-0.2.2.tar.gz e57af26457abd6e9e499af5fb95ade350951ef61
-  ringd-0.2.3.tar.gz a328c3305b3e1d6409f71a194612a8c33084ebf0
-  ringd-0.2.4.tar.gz ec33a369cae3e3ef701c4310e8bd974cdcea9d6e
-  ringd-0.2.5.tar.gz 21cff42f4645577e9939e6a0ecf8f7f847941859
-  ringd-0.2.6.tar.gz c9493dca5d8f6d1984e267d95c05c446403117d9
-  ringd-0.2.7.tar.gz 62acaa363f3a13692abdd92cf852ea7b4cf6feca
-  ringd-0.3.0.tar.gz 63ed7d615d7848e5a65921d64958184533a84ea8
-  ringd-0.3.1.tar.gz f8a10e476b4b602b3699a891d2903ff71bd62863
-  ringd-0.3.2.tar.gz 1bc17ccf9af7ac2b5b20d3645c790024a319ca5a
-  ringd-0.3.3.tar.gz c924ab5694b4fd3e1c871a73c9f4e35251787d3a
-  ringd-0.3.4.tar.gz ef076ef8202eefbbaf1ca485616b971599b70a50
-  ringd-0.3.5.tar.gz 958a24e41c20cbff72172ac80c3f2ee8fba0441e
-  ringd-0.3.6.tar.gz 2c01b8e760e6eb8eef927d7a7fc5c9aa94de5efa
-  ringd-0.3.7.tar.gz 35b43531344fc23f5309fa3ae789d1095078a834
  doPyLint 79637782de5a32f262d97c21e9c5372c14d5b3b3
  ghpDoc
   css
@@ -69,20 +51,19 @@ ringd
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  renameLocal c28ccbc2f5313dfd7dbf1b9ce7bf2841ea1086e5
  renamePerAPI 06acdd7a5d6bd407797aa09ef9b78469a1624520
- ring_client b64238b614579edc75b6af6519acc31432ac4cde
- ring_daemon 568a63090d55c1f1c6404c4611b54602eff5eb7b
+ ring_client 5dea1296cf7b26e3a7d4e93d909a79fe7788b5c7
+ ring_daemon ee1d4950b7eba0ad275838048781adb052bce84e
  ring_host_info_proto.py a86c09568cc3aa9a307cc693b97de9e0f0484f31
  ring_proto_spec.py 196d16fca7bb41dfbeca01cb022ad0050e5221d3
  ringd
-  __init__.py 93820aa802f77b3f2308a966f8794f020811102d
-  chanIO.py 4c41909e0deb706f4f7bb8ccc638554416fe6e89
+  __init__.py 9e4ceb970654f2b00c30757c299134cc31fb5f71
   chan_io.py dea26854dd3636be86d4ffd1a6f2bbec6ed6a80c
   daemon.py 2000827a18109b4ac89b97dc6864c134f3100f84
  setup.py 8b3e505f8bce3470a5706fff78b100b38a4c7977
  styleit 0b73a5f873fa6548d70e68763a1e4a469f261220
  test.all 24d985f3460209abf29761fdf0f6289a45b75823
  test_ring_host_info_proto.py 62f54746d58e0e06b18001de574907b751591ae8
- test_ring_proto_serialization.py 989d20af697636cdb70c7fafa15e1a2354650427
+ test_ring_proto_serialization.py 8ff59e9b9a3c66cecd248cf9773ea672c7435e35
 # END CONTENT #
 
-Ldn4iGcTX1KTOV4z2Y/Cym8e4Oa7MXWvdqgUIy0ekjLbgtY8doBE3lBQXaux2NRmFoL5fMZqm+jeaYC7CZ0HJvnwRlZxaloIkh7nJXjx0fGPhcatPtdnmEjf1F/JA1SpWsxS8/zARKB11KrmTOOgY/MpnYM+V6TlLBUB7KhG1ioLzHUOVS/XKDP/a63j9bPYyBixjarxT1wvguqxTNbnAwEiYxtI84IkYYwhjiIxiebRkqHMxC8+jQwtQwHmTlbyjBcGtL8OFaMr0WRNt7jW2CBiuK3lstVNT1462xNQj2d9XeXzkeiM5KWUEBSrx4w6/hf1/46n/diSk9R4rM2FiA==
+IZaPvkBv5gvW9LK8StrcsLTxGGjmu3UY/2jAowK0MU1+/lx98vjK3oLEHjiWS/D3MHXpEB7evw+Xyl/dDKRI+UEFkLczLVjOc4016cIeaFBQPFhxvs4Wf+yAgK3Xhc9OW/woVNjmvW1xnO2a47i9yXj4Bw0XomUEOnH55mWl0XJG0ZCL3RI7jyRy4waI4Pb2j0h5hPEntsbvyE3g2/HDwNJjPRP+X3h8S/2+tuiKwCk2s5fyVPVxKztCxLOwqnlr1D+bjv2HuDuiPVdFl4i7Z5bhX5Ea5GIIWfynYc8wjrI/3cTdAD/8MvfjlFFA/+7fguehUoJWHG1VcjYaVDhGWQ==

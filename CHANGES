@@ -1,6 +1,9 @@
 ~/dev/py/ringd/CHANGES
 
 
+v0.3.8
+    2017-05-03
+        * drop dist/* from repos; plus minor edits                  SLOC 1666
 v0.3.7
     2017-01-16
         * drop redundant utilities                                  SLOC 1596
@@ -61,6 +64,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 
