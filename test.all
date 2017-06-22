@@ -4,8 +4,7 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/ringd
   
-  ./test_ring_host_info_proto.py
-  ./test_ring_proto_serialization.py
+  pytest
   
 else
   echo "DEV_BASE is not defined"

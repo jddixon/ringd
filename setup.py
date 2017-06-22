@@ -6,7 +6,7 @@
 import re
 from distutils.core import setup
 __version__ = re.search(r"__version__\s*=\s*'(.*)'",
-                        open('ringd/__init__.py').read()).group(1)
+                        open('src/ringd/__init__.py').read()).group(1)
 
 # see http://docs.python.org/distutils/setupscript.html
 
@@ -20,11 +20,11 @@ setup(name='ringd',
       py_modules=[],
       #
       # a package has its own directory with an __init__.py in it
-      packages=['ringd', ],
+      packages=['src/ringd', ],
       #
       # scripts should have a globally unique name; they might be in a
       #   scripts/ subdir; SQuote the script name
-      scripts=['ring_client', 'ring_daemon'],
+      scripts=['src/ring_client', 'src/ring_daemon'],
       description='ring of servers connecting as a dense mesh using fieldz for communications',
       url='https://jddixon.github.io/ringd',
       classifiers=[

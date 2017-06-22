@@ -1,6 +1,6 @@
-pylint setup.py ring_daemon ring_client    \
-    ringd/chan_io.py    \
-    ringd/daemon.py     \
-    ringd/__init__.py   \
-    test*.py
+pylint setup.py src/ring_daemon src/ring_client    \
+    src/ringd/chan_io.py    \
+    src/ringd/daemon.py     \
+    src/ringd/__init__.py   \
+    tests/test*.py
 

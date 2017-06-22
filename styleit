@@ -4,7 +4,7 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/ringd
   
-  autopep8 -ai -r ringd ring_daemon ring_client *.py
+  autopep8 -air src tests
   
 else
   echo "DEV_BASE is not defined"
