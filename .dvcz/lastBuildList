@@ -7,29 +7,33 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-ringd v0.3.8
-2017-05-03 23:25:37
+ringd v0.3.9
+2017-06-22 01:49:51
 # BEGIN CONTENT #
 ringd
+ .cache
+  v
+   cache
+    lastfailed eee0cf9b82875c20689f022f27e1a909de004e53
  .dvcz
-  builds 4610fa8b5fc2611e2f7deed21b4dc4556a2085dd
+  builds e6cfde199414fe61824ad7fb132363345f06f91e
   copyright 081f1eacc7bee6ce9cf06ffc957c1472faf9c994
-  lastBuildList 48d42048efa5eb0d5ced4e077fd2aeaa60c66a90
+  lastBuildList db7d707f386f825d12382a9b157eb877800bb798
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 582426a9b589e3c3998b6e2992cc6c788548a981
   projCfg.local 3f560c74c19ba5fa5284d396ee6e0befb1a2bae0
-  version 77418ed205c222cea770f7606c46ca25d764ff54
+  version 8d4087f908a5c8ef9f41cbd61ac546d727424fce
  .gitignore 5185a3cb0539828e50edfc25d60c80ae291197fa
- CHANGES 72eed489cb66ef748866fb65ba7d9c8d292b886e
+ CHANGES 2dca345daadd9b08e1c5ac3835d841e9dae0dba0
  LICENSE-MIT.md 7ff8ae89c5e4489f22b3a360a03225241877bc8d
  MANIFEST.in 40a229dcafefdaad08383d1659b025ef06bb53af
  README 6df713adf5e9b96b4aba784bda89316512895c78
  README.md 0cb3a93097fe4a248f79875ddc1bedb75c95f16a
  TODO 45394bfcc4a7d640909cfb69fec4a65c08efb56e
  bkp2U 79deb36b41b8b2a0fa56a8d50c10d761ed5442d5
- checkCoverage 7fa4b53c7e805fd28ba5392180d9af793f206067
- countem 19532d117f845cb134e0120eea1ed63a197ec739
- doPyLint 79637782de5a32f262d97c21e9c5372c14d5b3b3
+ checkCoverage e147aa8428ad91fe1f9cda762b2320bd98230eae
+ countem 344b8d45a73b54cc37bbb4d01785e6cac420e550
+ doPyLint 246f29eaeac6a3b557f5ba85e9a71bbe960e8737
  ghpDoc
   css
    LICENSE.html5-boilerplate.md ded771b3245b190da0e81c76de5a80d41392c0a6
@@ -51,19 +55,21 @@ ringd
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
  renameLocal c28ccbc2f5313dfd7dbf1b9ce7bf2841ea1086e5
  renamePerAPI 06acdd7a5d6bd407797aa09ef9b78469a1624520
- ring_client 5dea1296cf7b26e3a7d4e93d909a79fe7788b5c7
- ring_daemon ee1d4950b7eba0ad275838048781adb052bce84e
- ring_host_info_proto.py a86c09568cc3aa9a307cc693b97de9e0f0484f31
- ring_proto_spec.py 196d16fca7bb41dfbeca01cb022ad0050e5221d3
- ringd
-  __init__.py 9e4ceb970654f2b00c30757c299134cc31fb5f71
-  chan_io.py dea26854dd3636be86d4ffd1a6f2bbec6ed6a80c
-  daemon.py 2000827a18109b4ac89b97dc6864c134f3100f84
- setup.py 8b3e505f8bce3470a5706fff78b100b38a4c7977
- styleit 0b73a5f873fa6548d70e68763a1e4a469f261220
- test.all 24d985f3460209abf29761fdf0f6289a45b75823
- test_ring_host_info_proto.py 62f54746d58e0e06b18001de574907b751591ae8
- test_ring_proto_serialization.py 8ff59e9b9a3c66cecd248cf9773ea672c7435e35
+ setup.py 6e11bfc390a2f2fc55de73cda1f5ccbba6eda05a
+ src
+  ring_client 5dea1296cf7b26e3a7d4e93d909a79fe7788b5c7
+  ring_daemon ee1d4950b7eba0ad275838048781adb052bce84e
+  ringd
+   __init__.py 3249e792eda85ce96fecfcab7f988a308ba61a1d
+   chan_io.py dea26854dd3636be86d4ffd1a6f2bbec6ed6a80c
+   daemon.py 2000827a18109b4ac89b97dc6864c134f3100f84
+ styleit c8ecacf7ae8be303c44673813ba725332ef91a50
+ test.all 0df308e8c516f1550eb0a97cfc03c2f7500d5d3c
+ tests
+  ring_host_info_proto.py a86c09568cc3aa9a307cc693b97de9e0f0484f31
+  ring_proto_spec.py 196d16fca7bb41dfbeca01cb022ad0050e5221d3
+  test_ring_host_info_proto.py 62f54746d58e0e06b18001de574907b751591ae8
+  test_ring_proto_serialization.py 8ff59e9b9a3c66cecd248cf9773ea672c7435e35
 # END CONTENT #
 
-IZaPvkBv5gvW9LK8StrcsLTxGGjmu3UY/2jAowK0MU1+/lx98vjK3oLEHjiWS/D3MHXpEB7evw+Xyl/dDKRI+UEFkLczLVjOc4016cIeaFBQPFhxvs4Wf+yAgK3Xhc9OW/woVNjmvW1xnO2a47i9yXj4Bw0XomUEOnH55mWl0XJG0ZCL3RI7jyRy4waI4Pb2j0h5hPEntsbvyE3g2/HDwNJjPRP+X3h8S/2+tuiKwCk2s5fyVPVxKztCxLOwqnlr1D+bjv2HuDuiPVdFl4i7Z5bhX5Ea5GIIWfynYc8wjrI/3cTdAD/8MvfjlFFA/+7fguehUoJWHG1VcjYaVDhGWQ==
+hrIRaUpR5ULzdQ+ERjs19Mldsgg1zUH20QgAYKqh8ST4FHHPSPb5aQ9h65u0pD5G/E1SzoE0MqFRf/88V7UKvuB6Bn1R8k8meV9nUv8Lw9khgm6S7K7X5vg+xyNvBHOr7rk2TpKJWNz06rIRitfLarYxofa2C7/Q+aPPgkdGDroq4daEi1x5ToLskEmMTaHPkacqkMcZLPDoapjqqqGqmPoyK0+IUK95Pklq4c+ESAmBI0KuqkX5eMaviJKbeCOh0kfe7MwLu50ibJBYUXgJpAihcWAE7envB82Ii+tzHkCAfZR4WXwBb30DN8xeXqcLfFJRciAFJkZQvX91tWMymw==
