@@ -2,11 +2,13 @@
 project:ringd
 package:ringd
 mainlang:py
-version:0.3.3
-versionDate:2016-10-17
+version:0.3.9
+versionDate:2017-06-21
 :?dirs?:
 dir:std:ghpDoc
 dir:std:dist
+dir:std:src
+dir:std:tests
 dir:std:.dvcz
 dir:pkg:ringd
 dir:clr:build
@@ -40,9 +42,5 @@ bash:std:doPyLint
 bash:std:checkCoverage
 bash:std:auto8it
 py:std:setup.py
-py:local:ring_host_info_proto.py
-py:local:ring_proto_spec.py
 py:global:ring_daemon
 py:global:ring_client
-py:test:test_ring_host_info_proto.py
-py:test:test_ring_proto_serialization.py
