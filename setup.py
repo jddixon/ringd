@@ -1,29 +1,26 @@
 #!/usr/bin/python3
-# ~/dev/py/ringd/setup.py
+# ringd/setup.py
 
-""" Set up distutils for ringd. """
+""" Setuptools project configuration for ringd. """
 
-import re
-from distutils.core import setup
-__version__ = re.search(r"__version__\s*=\s*'(.*)'",
-                        open('src/ringd/__init__.py').read()).group(1)
+from os.path import exists
+from setuptools import setup
 
-# see http://docs.python.org/distutils/setupscript.html
+long_desc = None
+if exists('README.md'):
+    with open('README.md', 'r') as file:
+        long_desc = file.read()
 
 setup(name='ringd',
-      version=__version__,
+      version='0.3.11',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
-      #
-      # wherever we have a .py file that will be imported, we
-      # list it here, without the extension but SQuoted
+      long_description=long_desc,
+      packages=['ringd'],
+      package_dir={'': 'src'},
       py_modules=[],
-      #
-      # a package has its own directory with an __init__.py in it
-      packages=['src/ringd', ],
-      #
-      # scripts should have a globally unique name; they might be in a
-      #   scripts/ subdir; SQuote the script name
+      include_package_data=False,
+      zip_safe=False,
       scripts=['src/ring_client', 'src/ring_daemon'],
       description='ring of servers connecting as a dense mesh using fieldz for communications',
       url='https://jddixon.github.io/ringd',
@@ -32,6 +29,11 @@ setup(name='ringd',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: English',
-          'Programming Language :: Python 3',
+          'Programming Language :: Python 2.7',
+          'Programming Language :: Python 3.3',
+          'Programming Language :: Python 3.4',
+          'Programming Language :: Python 3.5',
+          'Programming Language :: Python 3.6',
+          'Programming Language :: Python 3.7',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],)

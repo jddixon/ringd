@@ -1,6 +1,9 @@
 ~/dev/py/ringd/CHANGES
 
 
+v0.3.11
+    2017-08-14
+        * add tox.ini and related files; minor edits cfg files      SLOC 1692
 v0.3.10
     2017-07-26
         *
@@ -70,6 +73,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 
