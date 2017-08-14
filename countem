@@ -6,7 +6,7 @@ then
   
   rm -rf build/* myApps/* 
   
-  pySloc -L py  -X cover -X htmlcov -X dist -v $@ src/ringd src/ring_client src/ring_daemon tests/test_ring_host_info_proto.py tests/test_ring_proto_serialization.py setup.py
+  pySloc -L py  -X cover -X htmlcov -X dist -v $@ src/ringd src/ring_client src/ring_daemon tox.ini requirements.txt test_requirements.txt tests/test_ring_host_info_proto.py tests/test_ring_proto_serialization.py setup.py
 else
   echo "DEV_BASE is not defined"
 fi
