@@ -12,7 +12,7 @@ if exists('README.md'):
         long_desc = file.read()
 
 setup(name='ringd',
-      version='0.3.11',
+      version='0.3.13',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
       long_description=long_desc,
@@ -22,6 +22,7 @@ setup(name='ringd',
       include_package_data=False,
       zip_safe=False,
       scripts=['src/ring_client', 'src/ring_daemon'],
+      ext_modules=[],
       description='ring of servers connecting as a dense mesh using fieldz for communications',
       url='https://jddixon.github.io/ringd',
       classifiers=[
