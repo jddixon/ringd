@@ -1,6 +1,9 @@
 ~/dev/py/ringd/CHANGES
 
 
+v0.3.13
+    2017-12-01
+        *
 v0.3.12
     2017-10-26
         * add projConfig.toml                                       SLOC 1727
@@ -73,6 +76,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 

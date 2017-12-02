@@ -12,7 +12,7 @@ if exists('README.md'):
         long_desc = file.read()
 
 setup(name='ringd',
-      version='0.3.12',
+      version='0.3.13',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
       long_description=long_desc,
