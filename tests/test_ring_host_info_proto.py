@@ -9,7 +9,8 @@ import unittest
 from rnglib import SimpleRNG
 from wireops.chan import Channel
 
-import fieldz
+# import fieldz                         # UNUSED
+from fieldz.enum import Quants
 import fieldz.msg_spec as M
 from fieldz.msg_impl import make_msg_class, make_field_class
 
@@ -159,7 +160,7 @@ class TestRingHostInfoProto(unittest.TestCase):
         field = msg_spec[0]
         self.assertEqual(field.name, 'hosts')
         self.assertEqual(field.fTypeName, 'hostInfo')
-        self.assertEqual(field.quantifier, M.Q_PLUS)
+        self.assertEqual(field.quantifier, Quants.PLUS)
 
         # INNER MESSAGE SPEC ----------------------------------------
         msg_spec = s_obj_model.msgs[0].msgs[0]
