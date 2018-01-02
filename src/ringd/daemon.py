@@ -8,8 +8,8 @@ __all__ = ['clear_logs', 'invoke_the_daemon', 'actually_run_the_daemon']
 
 import socket
 import sys
-#import time
-from traceback import print_exc
+# import time
+# from traceback import print_exc
 import os
 try:
     from os import scandir
@@ -19,7 +19,7 @@ except ImportError:
 import upax
 
 from optionz import dump_options
-from xlattice import HashTypes, check_hashtype
+from xlattice import check_hashtype         # , HashTypes
 from xlattice.ftlog import LogMgr
 from xlattice.proc_lock import ProcLock
 
@@ -197,13 +197,13 @@ def setup_u_server(options):
     Actually starts a upaxBlockingServer running, then invokes wrapped
     code, then closes server in a finally block.
     """
-    no_changes = options.no_changes
+    # no_changes = options.no_changes               # UNUSED
     u_path = options.u_path
     hashtype = not options.hashtype3
     verbose = options.verbose
 
     check_hashtype(hashtype)
-    u_server = upax.BlockingServer(u_path, hashtype)
+    u_server = upax.server.BlockingServer(u_path, hashtype)
     options.u_server = u_server
     u_log = u_server.log
     options.u_log = u_log

@@ -11,7 +11,7 @@ from argparse import ArgumentParser
 
 from optionz import dump_options
 #import upax
-from xlattice import (HashTypes, check_hashtype,
+from xlattice import (check_hashtype,               # HashTypes,
                       parse_hashtype_etc, fix_hashtype)
 
 from ringd import(__version__, __version_date__,

@@ -1,6 +1,9 @@
 ~/dev/py/ringd/CHANGES
 
 
+v0.3.14
+    2018-01-01
+        * pylinting, debugging                                      SLOC 1722
 v0.3.13
     2017-12-01
         *
@@ -76,6 +79,7 @@ v0.2.0
     * original, mostly code from ../fieldz
     * testLogEntrySerialization.py succeeds                         SLOC  354
     * testRingHostInfoProto succeeds                                SLOC  359
+
 
 
 
