@@ -14,7 +14,7 @@ from fieldz.enum import Quants
 import fieldz.msg_spec as M
 from fieldz.msg_impl import make_msg_class, make_field_class
 
-from xlattice.node import Node      # THIS WAS FROM pzog.xlattice...
+from xlnode import Node      # THIS WAS FROM pzog.xlattice...
 from ringd import RING_HOST_INFO_PROTO
 
 RNG = SimpleRNG(int(time.time()))

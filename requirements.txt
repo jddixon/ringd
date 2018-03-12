@@ -1,2 +1,3 @@
 # ringd/requirements.txt
-
+scandir
+setuptools
