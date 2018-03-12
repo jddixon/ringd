@@ -8,21 +8,25 @@ k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
 ringd
-2018-01-02 01:42:57
+2018-03-12 19:19:25
 # BEGIN CONTENT #
 ringd
  .cache
   v
    cache
-    lastfailed eee0cf9b82875c20689f022f27e1a909de004e53
+    lastfailed a1dc903db3e973b2415bc66c7f691e646a228e9a
  .dvcz
-  builds 5cd429e1bd5cdf5c2ab1a9be65d5a4e3ede90267
-  lastBuildList ecd3bfbdea5a6d753789a4ba14e490586e559634
+  builds c814e51899dfed933afdc29039fffef3d778d798
+  lastBuildList 6037a02752a8b8a5983a3c915bd66776afce4755
   projCfg 438c85e0001c899e92e018ec460feb8f8bfb5213
   projCfg.local 3f560c74c19ba5fa5284d396ee6e0befb1a2bae0
-  projConfig.toml af95906006e7a44c1148f31894e98de9a6be9510
+  projConfig.toml 2740fbff441275e7c8553c022bc74a0f06f0ab62
  .gitignore c8129c7133b7a7755cefd3dfc62a9af7bc306aa0
- CHANGES 0fc1fef0253200463d87fd692d380485334c2877
+ .pytest_cache
+  v
+   cache
+    lastfailed 5799a835febc6a07d7b3ff2a135e2e308731cc9d
+ CHANGES b17e4b98c0c5423376d43ad622f79330985d9ea1
  LICENSE-MIT.md ce4053c54849d1033bd67b6cab7bdedc03de2b97
  MANIFEST.in 7ecdc5eedf233385e0f99ba4c6e4a42212adb46f
  README 6df713adf5e9b96b4aba784bda89316512895c78
@@ -50,24 +54,24 @@ ringd
  installit a8a497734779dff53f0e9c3d567ce1a04a594c15
  myApps
  pylintrc dd234fda24a547a9071f1e4608a3c1f3b7de9aa0
- requirements.txt 000041e95cd4dc75c2e4b5df80321ffe65720393
- setup.py 14d158e32d785fb780f4a5fed300ed1766a728f2
+ requirements.txt d33eb6d1e76aba3ad2d0029791f4e40a10b63cf1
+ setup.py d00cfea53489b90c7834413149666167bba2360c
  src
   ring_client b55697b79ce85814a3c4316d5aed998a6536f818
   ring_daemon e1e39fa9261e9224d2cb1c6e642981579c8516f9
   ringd
-   __init__.py f837f71c063b4e9165d1b2cb0262dc24b2756836
+   __init__.py efc18e72c0cd533dab3bad79317938fe165f6d14
    chan_io.py d4a2ecac3bcc8536cd009122f983b2ec517a1fb2
    daemon.py f0ef2fd0086b7feb1668c024a63e8408e3e687bb
  styleit 871466366e0c464fd446818196967b4d549cbe58
  test.all 43a4e0e82f96d029d967dc149c9e88461dec7508
- test_requirements.txt b0cc554a40ca2c3c940191059a8280183dff501f
+ test_requirements.txt e35ecbe830992627e22397e485aeda86bf0ae1c6
  tests
   ring_host_info_proto.py a86c09568cc3aa9a307cc693b97de9e0f0484f31
   ring_proto_spec.py 196d16fca7bb41dfbeca01cb022ad0050e5221d3
-  test_ring_host_info_proto.py 0e5a2ac75289dcb33b4bb427f100c5f65066727a
+  test_ring_host_info_proto.py 9806e99a00fb58ac91924a9c5468c883c3fa5f1f
   test_ring_proto_serialization.py 8ff59e9b9a3c66cecd248cf9773ea672c7435e35
- tox.ini 50fc206fe43770005cd4566784080f6ba43e4012
+ tox.ini e234de568fd8e10b3591546d9f2411b048a6bea4
 # END CONTENT #
 
-ADhtr6tdZy2kLhIKpPBbkQ+esgAjw/ZkAxL+U0rYyiJxGt12wP+fZeLWs9O68GzydL50GQ59mmRFBHkTekJeRPlCb/QlHnnADRBc+FbX+mw+GSLC12Mf2QjP3hQjOLiiVp7Z9rE3ZMck5O6HzQPEVRqsr/l+9gVYf+PqueTvl9ygHHIQhykma5uT95A6KP5UQoIgn+CincEWNL8od447GEeRjFZzk/HXc6b2A6OpEeYLM/rihZVtuYydGRiBdErWXmJ5kOz7x8cU0VF6N4BWoT/s8h5RRA3e5RS0jfU2x8+V1vwiSR2BTqi0hTuAdWFqOk+uPd8LJdkcihXC/JRMLw==
+P/2A4ZdeHptjPLqTSmO7ZtCBV7SzwpnzLM9C0KE+KMl4DmnvMdFVXYj19h3oIIQCSD64PgWyoSocXM+btT/BYnZ7fjGkvrfxFKo6jlUXZAxR7b5PlVFlxI0iv//SUuB7RRVFLT23WnQmYt76TlzYfSTyizz5fdMwYOgLjZSsMPXzHfKYrrNENu5OPQpAnLIXuO3nPry7RQPT450PJsCmugpkx+n/NikVu7lSEiYdLwh5a9D4iFexItV31YfyMI98ITPoKAQt1v/7bGCnKxQkQKl4nbKYmIZOTjutVSTM6tLRBwhbX23TX+OfXchoKi3rGIyZm40CJyvhC6dfm1ouLQ==
